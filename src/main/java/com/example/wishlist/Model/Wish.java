@@ -1,17 +1,28 @@
-package com.example.wishlist.DTO;
+package com.example.wishlist.Model;
 
-public class WishDTO {
+public class Wish {
+
+    private int wishID;
     private String name;
     private double price;
     private String description;
     private String link;
 
-      public WishDTO(String name, double price, String description, String link) {
-            this.name = name;
-            this.price = price;
-            this.description = description;
-            this.link = link;
-        }
+    public Wish(int wishID, String name, double price, String description, String link) {
+        this.wishID = wishID;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.link = link;
+    }
+
+    public int getWishID() {
+        return wishID;
+    }
+
+    public void setWishID(int wishID) {
+        this.wishID = wishID;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -28,6 +39,7 @@ public class WishDTO {
     public void setLink(String link) {
         this.link = link;
     }
+
     public String getName() {
         return name;
     }
@@ -43,10 +55,4 @@ public class WishDTO {
     public String getLink() {
         return link;
     }
-
-
-
-
-
-
 }

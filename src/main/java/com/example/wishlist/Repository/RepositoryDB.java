@@ -1,14 +1,11 @@
 package com.example.wishlist.Repository;
 
-
-import com.example.wishlist.DTO.WishlistDTO;
+import com.example.wishlist.Model.Wish;
+import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Util.ConnectionManager;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,26 +23,52 @@ public class RepositoryDB implements IRepository {
     private String pwd;
 
 
-    //view wishlists
+    //View Wishlists
     @Override
-    public List<WishlistDTO> getWishlists() {
-        List<WishlistDTO> wishlists = new ArrayList<>();
+    public List<Wishlist> getWishlists() {
+        List<Wishlist> wishlists = new ArrayList<>();
 
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "select name from wishlist;";
+            String SQL = "SELECT wishlist_id, name FROM wishlist;";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
+                int listID = rs.getInt("wishlist_id");
                 String listName = rs.getString("name");
 
-                wishlists.add(new WishlistDTO(listName));
+                wishlists.add(new Wishlist(listID ,listName));
             }
             return wishlists;
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    //View Wishes
+    public List<Wish> getWishes(int wishlistID) {
+        List<Wish> wishes = new ArrayList<>();
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "SELECT wish_id, name, price, description, link FROM wishes INNER JOIN wishlist_wishes USING(wish_id) WHERE wishlist_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, wishlistID);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                int wishID = rs.getInt("wish_id");
+                String itemName = rs.getString("name");
+                double price = rs.getDouble("price");
+                String description = rs.getString("description");
+                String link = rs.getString("link");
+
+                wishes.add(new Wish (wishID, itemName, price, description, link));
+            }
+            return wishes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 package com.example.wishlist.Service;
 
-
-import com.example.wishlist.DTO.WishlistDTO;
+import com.example.wishlist.Model.Wish;
+import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Repository.RepositoryDB;
 
 import java.util.List;
@@ -15,9 +15,14 @@ public class Service {
         this.repositoryDB = repositoryDB;
     }
 
-    public List<WishlistDTO> getWishlists() {
+    //View Wishlists
+    public List<Wishlist> getWishlists() {
         return repositoryDB.getWishlists();
     }
 
+    //View Wishes
+    public List<Wish> getWishes(int wishlistID) {
+        return repositoryDB.getWishes(wishlistID);
+    }
 
 }
