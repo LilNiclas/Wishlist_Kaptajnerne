@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Repository("wishlists")
-public class Repository implements IRepository {
+public class RepositoryDB implements IRepository {
 
 
     @Value("${spring.datasource.url}")

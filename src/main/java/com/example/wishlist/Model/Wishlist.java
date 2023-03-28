@@ -3,11 +3,11 @@ package com.example.wishlist.Model;
 public class Wishlist {
 
     private int wishlistID;
-    private String name;
+    private String listName;
 
-    public Wishlist(int wishlistID, String name) {
+    public Wishlist(int wishlistID, String listName) {
         this.wishlistID = wishlistID;
-        this.name = name;
+        this.listName = listName;
     }
 
     public int getWishlistID() {
@@ -18,11 +18,11 @@ public class Wishlist {
         this.wishlistID = wishlistID;
     }
 
-    public String getName() {
-        return name;
+    public String getListName() {
+        return listName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setListName(String name) {
+        this.listName = name;
     }
 }

@@ -2,21 +2,21 @@ package com.example.wishlist.Service;
 
 
 import com.example.wishlist.DTO.WishlistDTO;
-import com.example.wishlist.Repository.Repository;
+import com.example.wishlist.Repository.RepositoryDB;
 
 import java.util.List;
 
 @org.springframework.stereotype.Service
 public class Service {
 
-    private Repository repository;
+    private RepositoryDB repositoryDB;
 
-    public Service (Repository repository) {
-        this.repository = repository;
+    public Service (RepositoryDB repositoryDB) {
+        this.repositoryDB = repositoryDB;
     }
 
     public List<WishlistDTO> getWishlists() {
-        return repository.getWishlists();
+        return repositoryDB.getWishlists();
     }
 
 
