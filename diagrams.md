@@ -30,4 +30,5 @@ ref: public.Wishes.wish_ID < public.Wistlist_wishes.wish_ID
 <h2>Relational diagram</h2>
 
 ![RelationalModel](https://scontent-cph2-1.xx.fbcdn.net/v/t1.15752-9/338839046_168258556110125_2824207743627128412_n.png?_nc_cat=106&ccb=1-7&_nc_sid=ae9488&_nc_ohc=T3Mp9P9g578AX9XrQd6&_nc_ht=scontent-cph2-1.xx&oh=03_AdRSTIG5M5GWMqyLwvxA2hbN9C5NbFNe7sZjHn9JnM8wWw&oe=644A9DC4)
-<sub>This is not the final version</sub>
+
+<sub>The relational model is not the final version</sub>
