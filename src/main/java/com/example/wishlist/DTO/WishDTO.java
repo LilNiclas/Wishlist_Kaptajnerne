@@ -1,6 +1,6 @@
 package com.example.wishlist.DTO;
 
-public class Wish {
+public class WishDTO {
     private String name;
     private double price;
     private String description;
@@ -36,12 +36,7 @@ public class Wish {
         return link;
     }
 
-    public Wish(String name, double price, String description, String link) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.link = link;
-    }
+
 
 
 
