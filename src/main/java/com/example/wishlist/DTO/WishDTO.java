@@ -5,6 +5,14 @@ public class WishDTO {
     private double price;
     private String description;
     private String link;
+
+      public WishDTO(String name, double price, String description, String link) {
+            this.name = name;
+            this.price = price;
+            this.description = description;
+            this.link = link;
+        }
+
     public void setName(String name) {
         this.name = name;
     }
