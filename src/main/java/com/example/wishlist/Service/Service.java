@@ -1,5 +1,7 @@
 package com.example.wishlist.Service;
 
+import com.example.wishlist.DTO.WishDTO;
+import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Repository.RepositoryDB;
@@ -24,5 +26,17 @@ public class Service {
     public List<Wish> getWishes(int wishlistID) {
         return repositoryDB.getWishes(wishlistID);
     }
+
+    //Add Wishlist
+    public void addWishlist(WishlistDTO wishlistDTO) {
+        repositoryDB.addWishlist(wishlistDTO);
+    }
+
+
+    public void addWish(WishDTO wishDTO) {
+        repositoryDB.addWish(wishDTO);
+    }
+
+
 
 }

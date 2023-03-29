@@ -75,21 +75,31 @@ public class RepositoryDB implements IRepository {
 
 
     public void addWishlist(WishlistDTO wishlistDTO) {
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(
-                     "INSERT INTO wishlist (wishlist_id, name) VALUES (?, ?)")) {
-            stmt.setInt(1, wishlistDTO.getWishlistId());
-            stmt.setString(2, wishlistDTO.getName());
-            stmt.executeUpdate();
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "INSERT INTO wishlist (wishlist_id, name) VALUES (?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, wishlistDTO.getWishlistID());
+            pstmt.setString(2, wishlistDTO.getListName());
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-            // Handle exception
+            throw new RuntimeException(e);
         }
     }
 
+
     public void addWish(WishDTO wishDTO) {
-        List<Wish> wish = new ArrayList<>();
-        //try {
-            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-        //}
+        try {
+        Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = " ";
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+          //  pstmt.setInt(1, wishDTO);
+            ResultSet rs = pstmt.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+
+
 }

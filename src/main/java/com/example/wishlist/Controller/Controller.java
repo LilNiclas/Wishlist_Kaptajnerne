@@ -1,13 +1,13 @@
 package com.example.wishlist.Controller;
 
+import com.example.wishlist.DTO.WishDTO;
+import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Service.Service;
 import org.apache.catalina.valves.JsonErrorReportValve;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,6 +35,25 @@ public class Controller {
         List<Wish> wishes = service.getWishes(wishlistID);
         model.addAttribute("wishes", wishes);
         return "wishes";
+    }
+
+    @GetMapping(path = "home/addwishlist")
+    public String showCreateWishlist(Model model){
+        WishlistDTO wishlist = new WishlistDTO();
+        model.addAttribute("wishlist", wishlist);
+        return "createWishlist";
+    }
+
+    @PostMapping(path = "home/addwishlist")
+    public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlistDTO){
+        service.addWishlist(wishlistDTO);
+        return "redirect:/wishu/home";
+    }
+
+    @PostMapping(path = "home/wishes/addwish")
+    public String addWish(@ModelAttribute("wish") WishDTO wishDTO){
+        service.addWish(wishDTO);
+        return "redirect:/wishu/home";
     }
 
 }
