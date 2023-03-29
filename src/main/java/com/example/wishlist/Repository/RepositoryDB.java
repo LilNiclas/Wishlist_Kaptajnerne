@@ -1,5 +1,7 @@
 package com.example.wishlist.Repository;
 
+import com.example.wishlist.DTO.WishDTO;
+import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Util.ConnectionManager;
@@ -73,7 +75,15 @@ public class RepositoryDB implements IRepository {
 
 
     public void addWishlist(WishlistDTO wishlistDTO) {
-        
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                     "INSERT INTO wishlist (wishlist_id, name) VALUES (?, ?)")) {
+            stmt.setInt(1, wishlistDTO.getWishlistId());
+            stmt.setString(2, wishlistDTO.getName());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            // Handle exception
+        }
     }
 
     public void addWish(WishDTO wishDTO) {
