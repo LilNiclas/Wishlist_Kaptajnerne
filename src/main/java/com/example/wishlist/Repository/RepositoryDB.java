@@ -71,4 +71,15 @@ public class RepositoryDB implements IRepository {
         }
     }
 
+
+    public void addWishlist(WishlistDTO wishlistDTO) {
+        
+    }
+
+    public void addWish(WishDTO wishDTO) {
+        List<Wish> wish = new ArrayList<>();
+        //try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+        //}
+    }
 }
