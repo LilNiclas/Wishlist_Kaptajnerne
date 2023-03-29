@@ -38,7 +38,7 @@ public class RepositoryDB implements IRepository {
                 int listID = rs.getInt("wishlist_id");
                 String listName = rs.getString("name");
 
-                wishlists.add(new Wishlist(listID ,listName));
+                wishlists.add(new Wishlist(listID, listName));
             }
             return wishlists;
         } catch (SQLException e) {
@@ -56,14 +56,14 @@ public class RepositoryDB implements IRepository {
             pstmt.setInt(1, wishlistID);
             ResultSet rs = pstmt.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 int wishID = rs.getInt("wish_id");
                 String itemName = rs.getString("name");
                 double price = rs.getDouble("price");
                 String description = rs.getString("description");
                 String link = rs.getString("link");
 
-                wishes.add(new Wish (wishID, itemName, price, description, link));
+                wishes.add(new Wish(wishID, itemName, price, description, link));
             }
             return wishes;
         } catch (SQLException e) {
