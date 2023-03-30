@@ -13,7 +13,7 @@ public class Service {
 
     private RepositoryDB repositoryDB;
 
-    public Service (RepositoryDB repositoryDB) {
+    public Service(RepositoryDB repositoryDB) {
         this.repositoryDB = repositoryDB;
     }
 
@@ -34,10 +34,8 @@ public class Service {
     }
 
 
-  /*  public void addWish(WishDTO wishDTO) {
-        repositoryDB.addWish(wishDTO);
+    public void addWish(WishDTO wish) {
+        repositoryDB.addWish(wish);
     }
-*/
-
 
 }

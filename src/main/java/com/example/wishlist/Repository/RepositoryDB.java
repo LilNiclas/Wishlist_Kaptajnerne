@@ -132,16 +132,17 @@ public class RepositoryDB implements IRepository {
             pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, wishID);
             pstmt.setString(2, wish.getItemName());
+            pstmt.setDouble(3, wish.getPrice());
+            pstmt.setString(4, wish.getDescription());
+            pstmt.setString(5, wish.getLink());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
 
             if (rs.next()) {
-                wishlistID = rs.getInt(1);
-                Wishlist list = new Wishlist(wishlist.getWishlistID(), wishlist.getListName());
-                list.setWishlistID(wishlistID);
+                wishID = rs.getInt(1);
+                Wish list = new Wish(wish.getWishID(), wish.getItemName(), wish.getPrice(), wish.getDescription(), wish.getLink());
+                list.setWishID(wishID);
             }
-
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

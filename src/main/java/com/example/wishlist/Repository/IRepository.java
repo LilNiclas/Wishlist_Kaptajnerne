@@ -1,5 +1,6 @@
 package com.example.wishlist.Repository;
 
+import com.example.wishlist.DTO.WishDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
@@ -17,6 +18,9 @@ public interface IRepository {
 
     //Add Wishlist
     public void addWishlist (WishlistDTO wishlist);
+
+    //Add Wish
+    public void addWish(WishDTO wish);
 
 
 }
