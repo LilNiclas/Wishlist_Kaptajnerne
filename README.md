@@ -12,4 +12,4 @@ Temporary picture
 ## Description
 WishU is the go to wishlist for you who want an easy, fast and modern gifting experience. It allows you to make a wishlist for any occasion, and reserve your gifts, so you wont receive the same thing twice.
 
-WishU for u who like to take it easy
+WishU for U who like to take it easy
