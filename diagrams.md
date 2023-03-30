@@ -4,7 +4,7 @@
 
 Table Wishes {
   wish_ID int [pk]
-  name varchar
+  itemName varchar
   price double
   description varchar
   link varchar
@@ -12,7 +12,8 @@ Table Wishes {
 
 Table Wishlist {
   wishlist_ID int [pk]
-  name varchar
+  listName varchar
+  username varchar
 }
 
 Table Wistlist_wishes {
@@ -20,11 +21,17 @@ Table Wistlist_wishes {
   wish_ID int
 }
 
+Table User {
+  email varchar [pk]
+  username varchar
+}
+
 ref: public.Wishlist.wishlist_ID - public.Wistlist_wishes.wishlist_ID
 ref: public.Wishes.wish_ID < public.Wistlist_wishes.wish_ID
+ref: public.User.username - public.Wishlist.username
 
 ```
-![ERModel](https://scontent.xx.fbcdn.net/v/t1.15752-9/337329482_1750843222036273_3032261618498114028_n.png?stp=dst-png_s960x960&_nc_cat=103&ccb=1-7&_nc_sid=aee45a&_nc_ohc=hHRNN1yej0oAX_e1nwo&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdTN0MwL5rFZQIt92JFjQ1JOjMidGLpfSifSYJa5dLsjxg&oe=644A9123)
+![ERModel](https://scontent.xx.fbcdn.net/v/t1.15752-9/337743579_772980004344415_6332172548985483626_n.png?stp=dst-png_p403x403&_nc_cat=103&ccb=1-7&_nc_sid=aee45a&_nc_ohc=43sXUQ4YcREAX_cRGrc&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdRtfOktPnjatharTUTzr_kRVKXsJPA6vh6Al4tFr1g-PQ&oe=644C94A9)
 
 
 
