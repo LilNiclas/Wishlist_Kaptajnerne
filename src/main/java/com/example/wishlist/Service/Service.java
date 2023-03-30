@@ -27,16 +27,17 @@ public class Service {
         return repositoryDB.getWishes(wishlistID);
     }
 
+
     //Add Wishlist
-    public void addWishlist(WishlistDTO wishlistDTO) {
-        repositoryDB.addWishlist(wishlistDTO);
+    public void addWishlist(WishlistDTO wishlist) {
+        repositoryDB.addWishlist(wishlist);
     }
 
 
-    public void addWish(WishDTO wishDTO) {
+  /*  public void addWish(WishDTO wishDTO) {
         repositoryDB.addWish(wishDTO);
     }
-
+*/
 
 
 }

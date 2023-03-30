@@ -37,6 +37,8 @@ public class Controller {
         return "wishes";
     }
 
+
+    //Add Wishlist
     @GetMapping(path = "home/addwishlist")
     public String showCreateWishlist(Model model){
         WishlistDTO wishlist = new WishlistDTO();
@@ -45,15 +47,17 @@ public class Controller {
     }
 
     @PostMapping(path = "home/addwishlist")
-    public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlistDTO){
-        service.addWishlist(wishlistDTO);
+    public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlist){
+        service.addWishlist(wishlist);
         return "redirect:/wishu/home";
     }
 
+
+/*  //Add Wish
     @PostMapping(path = "home/wishes/addwish")
     public String addWish(@ModelAttribute("wish") WishDTO wishDTO){
         service.addWish(wishDTO);
         return "redirect:/wishu/home";
-    }
+    }*/
 
 }

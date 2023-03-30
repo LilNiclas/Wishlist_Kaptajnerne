@@ -3,14 +3,14 @@ package com.example.wishlist.Model;
 public class Wish {
 
     private int wishID;
-    private String name;
+    private String itemName;
     private double price;
     private String description;
     private String link;
 
-    public Wish(int wishID, String name, double price, String description, String link) {
+    public Wish(int wishID, String itemName, double price, String description, String link) {
         this.wishID = wishID;
-        this.name = name;
+        this.itemName = itemName;
         this.price = price;
         this.description = description;
         this.link = link;
@@ -24,8 +24,8 @@ public class Wish {
         this.wishID = wishID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public void setPrice(double price) {
@@ -40,8 +40,8 @@ public class Wish {
         this.link = link;
     }
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return itemName;
     }
 
     public double getPrice() {

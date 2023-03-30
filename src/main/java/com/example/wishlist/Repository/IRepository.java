@@ -16,7 +16,7 @@ public interface IRepository {
     public List<Wish> getWishes(int listID);
 
     //Add Wishlist
-    public void addWishlist (WishlistDTO wishlistDTO);
+    public void addWishlist (WishlistDTO wishlist);
 
 
 }

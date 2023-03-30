@@ -74,32 +74,78 @@ public class RepositoryDB implements IRepository {
     }
 
 
-    public void addWishlist(WishlistDTO wishlistDTO) {
+    //Add Wishlist
+    public void addWishlist(WishlistDTO wishlist) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "INSERT INTO wishlist (wishlist_id, name) VALUES (?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(SQL);
-            pstmt.setInt(1, wishlistDTO.getWishlistID());
-            pstmt.setString(2, wishlistDTO.getListName());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+            //ID
+            int wishlistID = 0;
 
-
-    public void addWish(WishDTO wishDTO) {
-        try {
-        Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = " ";
-            PreparedStatement pstmt = conn.prepareStatement(SQL);
-          //  pstmt.setInt(1, wishDTO);
+            //find wishlist_ID
+            String SQL1 = "SELECT wishlist_ID from wishlist where name = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(SQL1);
+            pstmt.setString(1, wishlist.getListName());
             ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                wishlistID = rs.getInt("wishlists_ID");
+            }
+
+            //insert wishlist to
+            String SQL = "INSERT INTO wishlist (wishlist_id, name) " +
+                    "VALUES (?, ?)";
+            pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, wishlistID);
+            pstmt.setString(2, wishlist.getListName());
+            pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
+
+            if (rs.next()) {
+                wishlistID = rs.getInt(1);
+                Wishlist list = new Wishlist(wishlist.getWishlistID(), wishlist.getListName());
+                list.setWishlistID(wishlistID);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+
+    //Add wish
+    public void addWish(WishDTO wish) {
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            int wishID = 0;
+
+            //find wish_id
+            String SQL1 = "SELECT wish_id from wishes where name = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(SQL1);
+            pstmt.setString(1, wish.getItemName());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                wishID = rs.getInt("wish_ID");
+            }
+
+            //insert wish to wishes
+            String SQL = "INSERT INTO wishes (wish_id, name, price, description, link) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, wishID);
+            pstmt.setString(2, wish.getItemName());
+            pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
+
+            if (rs.next()) {
+                wishlistID = rs.getInt(1);
+                Wishlist list = new Wishlist(wishlist.getWishlistID(), wishlist.getListName());
+                list.setWishlistID(wishlistID);
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 }
