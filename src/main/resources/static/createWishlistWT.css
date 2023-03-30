@@ -1,0 +1,86 @@
+body {
+    background-color: #F3F6FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #4A90E2;
+    font-size: 48px;
+    margin-top: 50px;
+}
+
+.form-group {
+    text-align: left;
+    margin: 20px;
+}
+
+label {
+    font-size: 24px;
+    color: #4A90E2;
+}
+
+input[type="text"] {
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-left: 10px;
+    width: 300px;
+}
+
+input[type="submit"], input[type="reset"], button {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 20px;
+    transition: all 0.2s ease-in-out;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover, button:hover {
+    background-color: #0072C6;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: #828282;
+    color: #FFFFFF;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 20px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary:hover {
+    background-color: #5F5F5F;
+    cursor: pointer;
+}
+
+.btn-lg {
+    font-size: 24px;
+}
+
+.btn-success {
+    background-color: #1FAE66;
+}
+
+.btn-danger {
+    background-color: #E84444;
+    margin-left: 20px;
+}
+
+.btn-success:hover, .btn-danger:hover {
+    background-color: #0E6E3D;
+    cursor: pointer;
+}
+
+div {
+    text-align: center;
+}

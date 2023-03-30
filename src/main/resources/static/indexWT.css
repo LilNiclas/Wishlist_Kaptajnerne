@@ -1,0 +1,67 @@
+body {
+    background-color: #F3F6FA;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #4A90E2;
+    font-size: 48px;
+    margin-top: 50px;
+}
+
+.card {
+    width: 50rem;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.card h5 {
+    color: #4A90E2;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #828282;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.card-link {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.2s ease-in-out;
+}
+
+.card-link:hover {
+    background-color: #0072C6;
+}
+
+button {
+    background-color: #4A90E2;
+    color: #FFFFFF;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 20px;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: #0072C6;
+    cursor: pointer;
+}
+
+.createWishlist {
+    text-align: center;
+}

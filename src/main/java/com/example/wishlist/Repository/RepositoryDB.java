@@ -109,8 +109,7 @@ public class RepositoryDB implements IRepository {
             throw new RuntimeException(e);
         }
     }
-
-
+    
     //Add wish
     public void addWish(WishDTO wish) {
         try {
