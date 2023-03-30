@@ -32,13 +32,13 @@ public class RepositoryDB implements IRepository {
 
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT wishlist_id, name FROM wishlist;";
+            String SQL = "SELECT wishlist_id, wishlistName FROM wishlist;";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
                 int listID = rs.getInt("wishlist_id");
-                String listName = rs.getString("name");
+                String listName = rs.getString("wishlistName");
 
                 wishlists.add(new Wishlist(listID, listName));
             }
@@ -53,14 +53,14 @@ public class RepositoryDB implements IRepository {
         List<Wish> wishes = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT wish_id, name, price, description, link FROM wishes INNER JOIN wishlist_wishes USING(wish_id) WHERE wishlist_id = ?";
+            String SQL = "SELECT wish_id, wishName, price, description, link FROM wishes INNER JOIN wishlist_wishes USING(wish_id) WHERE wishlist_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, wishlistID);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 int wishID = rs.getInt("wish_id");
-                String itemName = rs.getString("name");
+                String itemName = rs.getString("wishName");
                 double price = rs.getDouble("price");
                 String description = rs.getString("description");
                 String link = rs.getString("link");
@@ -82,7 +82,7 @@ public class RepositoryDB implements IRepository {
             int wishlistID = 0;
 
             //find wishlist_ID
-            String SQL1 = "SELECT wishlist_ID from wishlist where name = ?;";
+            String SQL1 = "SELECT wishlist_ID from wishlist where wishlistName = ?;";
             PreparedStatement pstmt = conn.prepareStatement(SQL1);
             pstmt.setString(1, wishlist.getListName());
             ResultSet rs = pstmt.executeQuery();
@@ -91,7 +91,7 @@ public class RepositoryDB implements IRepository {
             }
 
             //insert wishlist to
-            String SQL = "INSERT INTO wishlist (wishlist_id, name) " +
+            String SQL = "INSERT INTO wishlist (wishlist_id, wishName) " +
                     "VALUES (?, ?)";
             pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, wishlistID);
@@ -118,7 +118,7 @@ public class RepositoryDB implements IRepository {
             int wishID = 0;
 
             //find wish_id
-            String SQL1 = "SELECT wish_id from wishes where name = ?;";
+            String SQL1 = "SELECT wish_id from wishes where wishName = ?;";
             PreparedStatement pstmt = conn.prepareStatement(SQL1);
             pstmt.setString(1, wish.getItemName());
             ResultSet rs = pstmt.executeQuery();
@@ -127,7 +127,7 @@ public class RepositoryDB implements IRepository {
             }
 
             //insert wish to wishes
-            String SQL = "INSERT INTO wishes (wish_id, name, price, description, link) " +
+            String SQL = "INSERT INTO wishes (wish_id, listName, price, description, link) " +
                     "VALUES (?, ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, wishID);
