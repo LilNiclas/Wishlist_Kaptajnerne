@@ -129,7 +129,7 @@ public class RepositoryDB implements IRepository {
             }
 
             //insert wish to wishes
-            String SQL = "INSERT INTO wishes (wish_id, wishlistName, price, description, link) " +
+            String SQL = "INSERT INTO wishes (wish_id, wishName, price, description, link) " +
                     "VALUES (?, ?, ?, ?, ?)";
             pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, wishID);
