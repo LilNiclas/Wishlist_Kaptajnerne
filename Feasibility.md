@@ -23,7 +23,7 @@ The main competition internationally is the ***Amazon wishlist*** u can create o
 <img src="https://scontent-cph2-1.xx.fbcdn.net/v/t1.15752-9/288872729_1917755455081432_206929955856000161_n.png?_nc_cat=102&ccb=1-7&_nc_sid=ae9488&_nc_ohc=zIaSNJLs42sAX8Rkrpv&_nc_ht=scontent-cph2-1.xx&oh=03_AdQYJFLTaQ7LAjfS4VCWH-Y9SJdQXAXznaiFmH4UHy3NFw&oe=644CD2A0" width="400">
 
 <h3>Technical feasibility:</h3>
-
+We are 4 members working on the project. To complete a small scale project as the one we are developing it doesn't require more. We are coding in Java through intelliJ IDEA and using github to overview our progress. We have all the technical resources for the project and a timeframe og 2 weeks to complete the project. After analyzing the project it is technically feasible. 
 
 <h3>Financial feasibility:</h3>
 
