@@ -1,5 +1,7 @@
 <h2>Feasibility study</h2>
 
+<h>Market feasibility</h3>
+
 <h3>Our product:</h3>
 Our product is a wishlist that is easy to access and maneuver around. Leaving the user with a good experience. Our product will let the user be able to create one or multiple wishlists with one or multiple wishes. They will be able to share this wishlist with friends, family or anyone they would like, through a link. 
 
@@ -19,6 +21,18 @@ The main competition in denmark is ***Ønskeskyen***, Ønskeskyen was created in
 
 The main competition internationally is the ***Amazon wishlist*** u can create on Amazon. This is connected to the Amazon website where you can purchase all kinds of stuff, which you can then add to your wishlist and share with friends.
 <img src="https://scontent-cph2-1.xx.fbcdn.net/v/t1.15752-9/288872729_1917755455081432_206929955856000161_n.png?_nc_cat=102&ccb=1-7&_nc_sid=ae9488&_nc_ohc=zIaSNJLs42sAX8Rkrpv&_nc_ht=scontent-cph2-1.xx&oh=03_AdQYJFLTaQ7LAjfS4VCWH-Y9SJdQXAXznaiFmH4UHy3NFw&oe=644CD2A0" width="400">
+
+<h3>Technical feasibility:</h3>
+
+
+<h3>Financial feasibility:</h3>
+
+
+<h3>Operational feasibility:</h3>
+
+
+
+
 
 
 
