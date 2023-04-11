@@ -16,7 +16,6 @@ public class WishDTO {
     }
 
     public WishDTO () {
-
     }
 
     public int getWishID() {

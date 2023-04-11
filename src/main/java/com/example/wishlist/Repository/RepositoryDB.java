@@ -32,15 +32,16 @@ public class RepositoryDB implements IRepository {
 
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT wishlist_id, wishlistName FROM wishlist;";
+            String SQL = "SELECT wishlist_id, wishlistName, username FROM wishlist;";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
                 int listID = rs.getInt("wishlist_id");
                 String listName = rs.getString("wishlistName");
+                String username = rs.getString("username");
 
-                wishlists.add(new Wishlist(listID, listName));
+                wishlists.add(new Wishlist(listID, listName, username));
             }
             return wishlists;
         } catch (SQLException e) {
@@ -74,6 +75,8 @@ public class RepositoryDB implements IRepository {
     }
 
 
+
+
     //Add Wishlist
     public void addWishlist(WishlistDTO wishlist) {
         try {
@@ -82,7 +85,7 @@ public class RepositoryDB implements IRepository {
             int wishlistID = 0;
 
             //find wishlist_ID
-            String SQL1 = "SELECT wishlist_ID from wishlist where wishlistName = ?;";
+            String SQL1 = "SELECT wishlist_id from wishlist where wishlistName = ?;";
             PreparedStatement pstmt = conn.prepareStatement(SQL1);
             pstmt.setString(1, wishlist.getListName());
             ResultSet rs = pstmt.executeQuery();
@@ -91,17 +94,18 @@ public class RepositoryDB implements IRepository {
             }
 
             //insert wishlist to
-            String SQL = "INSERT INTO wishlist (wishlist_id, wishName) " +
-                    "VALUES (?, ?)";
+            String SQL = "INSERT INTO wishlist (wishlist_id, wishlistName, username) " +
+                    "VALUES (?, ?, ?)";
             pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, wishlistID);
             pstmt.setString(2, wishlist.getListName());
+            pstmt.setString(3, wishlist.getUsername());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
 
             if (rs.next()) {
                 wishlistID = rs.getInt(1);
-                Wishlist list = new Wishlist(wishlist.getWishlistID(), wishlist.getListName());
+                Wishlist list = new Wishlist(wishlist.getWishlistID(), wishlist.getListName(), wishlist.getUsername());
                 list.setWishlistID(wishlistID);
             }
 
@@ -109,7 +113,11 @@ public class RepositoryDB implements IRepository {
             throw new RuntimeException(e);
         }
     }
-    
+
+
+
+
+
     //Add wish
     public void addWish(WishDTO wish) {
         try {
