@@ -54,17 +54,19 @@ public class Controller {
 
 
   //Add Wish
-    @GetMapping(path = "home/addwish")
-    public String showCreateWish(Model model) {
+    @GetMapping(path = "home/wishlists/{wishlistID}/addwish")
+    public String showCreateWish(@PathVariable("wishlistID") int wishlistID, Model model) {
         WishDTO wish = new WishDTO();
         model.addAttribute("wish", wish);
+        model.addAttribute("wishlistIDs", wishlistID);
         return "createWish";
     }
 
-    @PostMapping(path = "home/addwish")
-    public String addWish(@ModelAttribute("wish") WishDTO wishDTO){
-        service.addWish(wishDTO);
-        return "redirect:/wishu/home";
+    @PostMapping(path = "home/wishlists/{wishlistID}/addwish")
+    public String addWish(@ModelAttribute("wish") WishDTO wishDTO, @PathVariable("wishlistID") int wishlistID) {
+        service.addWish(wishDTO, wishlistID);
+        return "redirect:/wishu/wishes/" + wishlistID;
     }
+
 
 }

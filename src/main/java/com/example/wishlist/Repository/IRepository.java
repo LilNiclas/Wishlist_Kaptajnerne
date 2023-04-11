@@ -20,7 +20,7 @@ public interface IRepository {
     public void addWishlist (WishlistDTO wishlist);
 
     //Add Wish
-    public void addWish(WishDTO wish);
+    public void addWish(WishDTO wish, int wishlistID);
 
 
 }

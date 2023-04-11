@@ -6,7 +6,16 @@ public class WishDTO {
     private double price;
     private String description;
     private String link;
+    private int wishlistID;
 
+    public WishDTO(int wishID, String itemName, double price, String description, String link, int  wishlistID) {
+        this.wishID = wishID;
+        this.itemName = itemName;
+        this.price = price;
+        this.description = description;
+        this.link = link;
+        this.wishlistID = wishlistID;
+    }
     public WishDTO(int wishID, String itemName, double price, String description, String link) {
         this.wishID = wishID;
         this.itemName = itemName;
@@ -14,6 +23,8 @@ public class WishDTO {
         this.description = description;
         this.link = link;
     }
+
+
 
     public WishDTO () {
     }
@@ -56,5 +67,13 @@ public class WishDTO {
 
     public String getLink() {
         return link;
+    }
+
+    public int getWishlistID() {
+        return wishlistID;
+    }
+
+    public void setWishlistID(int wishlistID) {
+        this.wishlistID = wishlistID;
     }
 }

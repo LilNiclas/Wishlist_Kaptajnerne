@@ -34,8 +34,8 @@ public class Service {
     }
 
 
-    public void addWish(WishDTO wish) {
-        repositoryDB.addWish(wish);
+    public void addWish(WishDTO wish, int wishlistID) {
+        repositoryDB.addWish(wish, wishlistID);
     }
 
 }

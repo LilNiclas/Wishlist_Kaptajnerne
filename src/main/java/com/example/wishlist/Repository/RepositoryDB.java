@@ -81,28 +81,19 @@ public class RepositoryDB implements IRepository {
             //ID
             int wishlistID = 0;
 
-            //find wishlist_ID
-            String SQL1 = "SELECT wishlist_id from wishlist where wishlistName = ?;";
-            PreparedStatement pstmt = conn.prepareStatement(SQL1);
-            pstmt.setString(1, wishlist.getListName());
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                wishlistID = rs.getInt("wishlists_ID");
-            }
-
-            //insert wishlist to
+            //insert list to wishlist
             String SQL = "INSERT INTO wishlist (wishlist_id, wishlistName, username) " +
                     "VALUES (?, ?, ?)";
-            pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, wishlistID);
             pstmt.setString(2, wishlist.getListName());
             pstmt.setString(3, wishlist.getUsername());
             pstmt.executeUpdate();
-            rs = pstmt.getGeneratedKeys();
+            ResultSet rs = pstmt.getGeneratedKeys();
 
             if (rs.next()) {
                 wishlistID = rs.getInt(1);
-                Wishlist list = new Wishlist(wishlist.getWishlistID(), wishlist.getListName(), wishlist.getUsername());
+                WishlistDTO list = new WishlistDTO(wishlist.getWishlistID(), wishlist.getListName(), wishlist.getUsername());
                 list.setWishlistID(wishlistID);
             }
 
@@ -112,43 +103,40 @@ public class RepositoryDB implements IRepository {
     }
 
 
-
     //Add wish
-    public void addWish(WishDTO wish) {
+    public void addWish(WishDTO wish, int wishlistID) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            //ID
             int wishID = 0;
-
-            //find wish_id
-            String SQL1 = "SELECT wish_id from wishes where wishName = ?;";
-            PreparedStatement pstmt = conn.prepareStatement(SQL1);
-            pstmt.setString(1, wish.getItemName());
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                wishID = rs.getInt("wish_ID");
-            }
 
             //insert wish to wishes
             String SQL = "INSERT INTO wishes (wish_id, wishName, price, description, link) " +
                     "VALUES (?, ?, ?, ?, ?)";
-            pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, wishID);
             pstmt.setString(2, wish.getItemName());
             pstmt.setDouble(3, wish.getPrice());
             pstmt.setString(4, wish.getDescription());
             pstmt.setString(5, wish.getLink());
             pstmt.executeUpdate();
-            rs = pstmt.getGeneratedKeys();
+            ResultSet rs = pstmt.getGeneratedKeys();
 
+            //wish object
             if (rs.next()) {
                 wishID = rs.getInt(1);
-                Wish list = new Wish(wish.getWishID(), wish.getItemName(), wish.getPrice(), wish.getDescription(), wish.getLink());
-                list.setWishID(wishID);
+                //Insert into wishlist_wishses
+                WishDTO list = new WishDTO(wish.getWishID(), wish.getItemName(), wish.getPrice(), wish.getDescription(), wish.getLink());
+                SQL = "INSERT INTO wishlist_wishes (wishlist_id, wish_id) " +
+                        "VALUES (?, ?)";
+                pstmt = conn.prepareStatement(SQL);
+                pstmt.setInt(1, wishlistID);
+                pstmt.setInt(2, wishID);
+                pstmt.executeUpdate();
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
-
 }
