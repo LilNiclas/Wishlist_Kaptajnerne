@@ -74,9 +74,6 @@ public class RepositoryDB implements IRepository {
         }
     }
 
-
-
-
     //Add Wishlist
     public void addWishlist(WishlistDTO wishlist) {
         try {
@@ -113,8 +110,6 @@ public class RepositoryDB implements IRepository {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
 

@@ -61,7 +61,7 @@ public class Controller {
         return "createWish";
     }
 
-    @PostMapping(path = "home/wishes/addwish")
+    @PostMapping(path = "home/addwish")
     public String addWish(@ModelAttribute("wish") WishDTO wishDTO){
         service.addWish(wishDTO);
         return "redirect:/wishu/home";
