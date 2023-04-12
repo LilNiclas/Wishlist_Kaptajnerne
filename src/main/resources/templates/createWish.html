@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th ="http://www.thymeleaf.org">
+<link th:href="@{/createWishWT.css}" rel="stylesheet">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>createawish</title>
 </head>
 <body>
-<div align="center">
+<div>
     <h1>Create wish</h1>
     <form action="#" th:action="@{/wishu/home/wishlists/{wishlistID}/addwish(wishlistID=${wishlistID})}" method="post" th:object="${wish}">
 

@@ -15,13 +15,13 @@ import java.util.List;
 public class RepositoryDB implements IRepository {
 
 
-    @Value("${spring.datasource.url}")
+    @Value("jdbc:mysql://localhost:3306/wishlist")
     private String db_url;
 
-    @Value("${spring.datasource.username}")
+    @Value("TBK")
     private String uid;
 
-    @Value("${spring.datasource.password}")
+    @Value("1234")
     private String pwd;
 
 
