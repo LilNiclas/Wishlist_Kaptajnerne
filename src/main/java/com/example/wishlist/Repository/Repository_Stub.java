@@ -7,6 +7,7 @@ import com.example.wishlist.Model.Wishlist;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+/*
 
 @Repository("Repository")
 public class Repository_Stub implements  IRepository {
@@ -41,8 +42,8 @@ public class Repository_Stub implements  IRepository {
 
     }
 
-    @Override
     public void deleteWishlist(Integer wishlistID) {
 
     }
 }
+*/

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<link th:href="@{/indexWT.css}" rel="stylesheet">
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<h1 align="center">Welcome to WishU</h1>
+
+<div class="card" th:each="users : ${user}">
+    <div class="card-body">
+        <h5 class="card-title" th:text="${users.email}"></h5>
+        <p class="card-text" th:text ="${users.username}"></p>
+        <a th:href="@{/wishu/home/{email}(email=${users.username})}"
+           class="card-link">Wishlists</a>
+    </div>
+</div>
+
+<div class="createUser">
+    <a>
+        <button>Create User</button>
+    </a>
+</div>
+
+</body>
+</html>
