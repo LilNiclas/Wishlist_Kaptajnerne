@@ -11,6 +11,8 @@ import java.util.List;
 public interface IRepository {
 
 
+    Wishlist findWishlistByID(int wishlistID);
+
     //View Wishlists
     public List<Wishlist> getWishlists(String email);
 
@@ -25,6 +27,9 @@ public interface IRepository {
 
     //View Users
     public List<User> getUsers();
+
+    //Delete Wishlist
+    public void deleteWishlist(Integer wishlistID);
 
 
 }

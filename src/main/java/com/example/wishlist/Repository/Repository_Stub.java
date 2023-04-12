@@ -13,10 +13,10 @@ import java.util.List;
 public class Repository_Stub implements  IRepository {
 
     @Override
-    public Superhero findSuperheroByID(int heroID) {
-        for (Superhero superhero : superheroes) {
-            if (superhero.getHeroID() == (heroID)) {
-                return superhero;
+    public Wishlist findWishlistByID(int wishlistID) {
+        for (Wishlist wishlist : getWishlists()) {
+            if (wishlist.getWishlistID() == (wishlistID)) {
+                return wishlist;
             }
         }
         return null;

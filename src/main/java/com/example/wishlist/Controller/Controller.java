@@ -6,7 +6,10 @@ import com.example.wishlist.Model.User;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Service.Service;
+import org.apache.catalina.core.ApplicationContext;
 import org.apache.catalina.valves.JsonErrorReportValve;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,5 +80,19 @@ public class Controller {
         service.addWish(wishDTO, wishlistID);
         return "redirect:/wishu/wishes/" + wishlistID;
     }
+
+    //Delete Wishlist
+    @GetMapping("home/delete/{wishlistID}")
+    public String showDeleteWishlist(@PathVariable("wishlistID") int wishlistID, Model model){
+        model.addAttribute("wishlist", service.findWishlistByID(wishlistID));
+        return "deleteWishlist";
+    }
+
+    @PostMapping("home/delete/{wishlistID}")
+    public String deleteWishlist(@ModelAttribute("wishlistID") int wishlistID){
+        service.deleteWishlist(wishlistID);
+        return "redirect:/wishu/home";
+    }
+
 
 }

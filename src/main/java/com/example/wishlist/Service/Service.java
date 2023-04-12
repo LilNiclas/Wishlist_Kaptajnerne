@@ -28,6 +28,7 @@ public class Service {
         return repositoryDB.getWishes(wishlistID);
     }
 
+
     //Add Wishlist
     public void addWishlist(WishlistDTO wishlist) {
         repositoryDB.addWishlist(wishlist);
@@ -36,6 +37,16 @@ public class Service {
     //Add Wish
     public void addWish(WishDTO wish, int wishlistID) {
         repositoryDB.addWish(wish, wishlistID);
+    }
+
+    //Find Wishlist
+    public Wishlist findWishlistByID (int wishlistID) {
+        return repositoryDB.findWishlistByID(wishlistID);
+    }
+
+    //Delete Wishlist
+    public void deleteWishlist (Integer wishlistID) {
+        repositoryDB.deleteWishlist(wishlistID);
     }
 
     //View Users

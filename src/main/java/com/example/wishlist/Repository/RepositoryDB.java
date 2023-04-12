@@ -163,4 +163,41 @@ public class RepositoryDB implements IRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteWishlist(Integer wishlistID) {
+        String SQL = "DELETE FROM wishlist WHERE wishlist_id = ?";
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, wishlistID);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Wishlist with ID " + wishlistID + " has been deleted.");
+            } else {
+                System.out.println("No wishlist with ID " + wishlistID + " found to delete.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Wishlist findWishlistByID(int wishlistID) {
+        String SQL = "SELECT * FROM wishlist WHERE wishlist_id = ?;";
+
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, wishlistID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int wishlistId = rs.getInt("wishlist_id");
+                String listName = rs.getString("wishlistName");
+                String username = rs.getString("username");
+                return new Wishlist(wishlistId, listName, username);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
