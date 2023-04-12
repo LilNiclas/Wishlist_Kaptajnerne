@@ -217,4 +217,34 @@ public class RepositoryDB implements IRepository {
     }
 */
 
+    @Override
+    public void editwish(Wish wish) {
+
+    }
+
+    @Override
+    public void editWish(Wish wish) {
+
+    }
+
+    public void editWish(Wish wish, int wishlistID) {
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "UPDATE wishes SET wishName = ?, price = ?, description = ?, link = ? WHERE wish_id = (SELECT wish_id FROM wishlist_wishes WHERE wishlist_id = ? AND wish_id = ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(SQL)) {
+                stmt.setString(1, wish.getItemName());
+                stmt.setDouble(2, wish.getPrice());
+                stmt.setString(3, wish.getDescription());
+                stmt.setString(4, wish.getLink());
+                stmt.setInt(5, wishlistID);
+                stmt.setInt(6, wish.getWishID());
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

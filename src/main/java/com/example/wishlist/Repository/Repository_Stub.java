@@ -12,7 +12,7 @@ import java.util.List;
 @Repository("Repository")
 public class Repository_Stub implements  IRepository {
 
-    @Override
+    /*@Override
     public Wishlist findWishlistByID(int wishlistID) {
         for (Wishlist wishlist : getWishlists()) {
             if (wishlist.getWishlistID() == (wishlistID)) {
@@ -20,7 +20,7 @@ public class Repository_Stub implements  IRepository {
             }
         }
         return null;
-    }
+    }*/
 
     @Override
     public List<Wishlist> getWishlists() {
@@ -42,8 +42,12 @@ public class Repository_Stub implements  IRepository {
 
     }
 
-    public void deleteWishlist(Integer wishlistID) {
+    public void editwish(Wish wish) {
 
+    }
+
+    @Override
+    public void editWish(Wish wish) {
     }
 }
 */

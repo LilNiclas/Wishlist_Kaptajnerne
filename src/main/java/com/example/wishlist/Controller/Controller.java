@@ -5,11 +5,16 @@ import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.User;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
+import com.example.wishlist.Repository.IRepository;
 import com.example.wishlist.Service.Service;
 import org.apache.catalina.core.ApplicationContext;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.catalina.valves.JsonErrorReportValve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +25,11 @@ import java.util.List;
 @RequestMapping(path = "wishu")
 public class Controller {
 
+    IRepository repository;
     private Service service;
-
-    public Controller(Service service) {
+    public Controller(Service service, @Qualifier("Repository") IRepository iRepository) {
         this.service = service;
+        this.repository=iRepository;
     }
 
     //View Users
@@ -92,6 +98,24 @@ public class Controller {
     public String deleteWishlist(@ModelAttribute("wishlistID") int wishlistID){
         service.deleteWishlist(wishlistID);
         return "redirect:/wishu/home";
+    }
+
+    @GetMapping(value = {"/editWish"})
+    public String showEditWish(HttpServletRequest request, @PathVariable("id") int id, Model model) {
+        if (request.getSession().getAttribute("userId") == null) {
+            return "login";
+        }
+        int user1 = (int) request.getSession().getAttribute("userId");
+        model.addAttribute("id", id);
+        model.addAttribute("wish", repository.getWishes(id));
+        return "editWish";
+    }
+
+    @PostMapping(value = {"/editWish"})
+    public String editWish(@ModelAttribute Wish wish) {
+        int id = wish.getWishID();
+        repository.editwish(wish);
+        return "editWish" + id;
     }
 
 

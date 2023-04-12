@@ -20,11 +20,12 @@ public interface IRepository {
     public List<Wish> getWishes(int listID);
 
     //Add Wishlist
-    public void addWishlist (WishlistDTO wishlist);
+    public void addWishlist(WishlistDTO wishlist);
 
     //Add Wish
     public void addWish(WishDTO wish, int wishlistID);
 
+    public void editwish(Wish wish);
     //View Users
     public List<User> getUsers();
 
@@ -32,4 +33,5 @@ public interface IRepository {
     public void deleteWishlist(Integer wishlistID);
 
 
+    void editWish(Wish wish);
 }
