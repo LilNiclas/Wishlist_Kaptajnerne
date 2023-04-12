@@ -16,6 +16,7 @@
         <th scope="col">Price</th>
         <th scope="col">Description</th>
         <th scope="col">Link</th>
+        <th scope="col">Tasks</th>
     </tr>
     </thead>
     <tbody>
@@ -25,6 +26,8 @@
         <td th:text="${wish.price}"/>
         <td th:text="${wish.description}"/>
         <td th:text="${wish.link}"/>
+        <td> <a th:href="@{/wishu/editwish}">
+            <button type="button" class="btn">Edit wish</button>
     </tr>
     </tbody>
 </table>
