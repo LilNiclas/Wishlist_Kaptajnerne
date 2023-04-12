@@ -200,4 +200,21 @@ public class RepositoryDB implements IRepository {
         }
         return null;
     }
+/*
+    public void deleteWish(int wishlistID, WishDTO wish) {
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            int wishID = 0;
+
+            String SQL = "DELETE FROM wishlist_wishes \n" +
+                    "WHERE wishlist_id = (SELECT wishlist_id FROM wishlist WHERE wishlistName = '?' AND username = '?')\n" +
+                    "AND wish_id = (SELECT wish_id FROM wishes WHERE wishName = '?');\n";
+
+            PreparedStatement stmt1 = conn.prepareStatement(SQL);
+            stmt1.setInt(1, wishlistID);
+
+        }
+    }
+*/
+
 }
