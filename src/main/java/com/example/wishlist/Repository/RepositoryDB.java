@@ -2,6 +2,7 @@ package com.example.wishlist.Repository;
 
 import com.example.wishlist.DTO.WishDTO;
 import com.example.wishlist.DTO.WishlistDTO;
+import com.example.wishlist.Model.User;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Util.ConnectionManager;
@@ -27,14 +28,15 @@ public class RepositoryDB implements IRepository {
 
     //View Wishlists
     @Override
-    public List<Wishlist> getWishlists() {
+    public List<Wishlist> getWishlists(String email) {
         List<Wishlist> wishlists = new ArrayList<>();
 
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT wishlist_id, wishlistName, username FROM wishlist;";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL);
+            String SQL = "SELECT wishlist_id, wishlistName, username FROM wishlist INNER JOIN users USING(username) Where email = ? ;";
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 int listID = rs.getInt("wishlist_id");
@@ -139,4 +141,80 @@ public class RepositoryDB implements IRepository {
             throw new RuntimeException(e);
         }
     }
+
+    //Get Users
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "SELECT username, email FROM users;";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String email = rs.getString("email");
+
+                users.add(new User(username, email));
+            }
+            return users;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteWishlist(Integer wishlistID) {
+        String SQL = "DELETE FROM wishlist WHERE wishlist_id = ?";
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, wishlistID);
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Wishlist with ID " + wishlistID + " has been deleted.");
+            } else {
+                System.out.println("No wishlist with ID " + wishlistID + " found to delete.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Wishlist findWishlistByID(int wishlistID) {
+        String SQL = "SELECT * FROM wishlist WHERE wishlist_id = ?;";
+
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, wishlistID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int wishlistId = rs.getInt("wishlist_id");
+                String listName = rs.getString("wishlistName");
+                String username = rs.getString("username");
+                return new Wishlist(wishlistId, listName, username);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+/*
+    public void deleteWish(int wishlistID, WishDTO wish) {
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            int wishID = 0;
+
+            String SQL = "DELETE FROM wishlist_wishes \n" +
+                    "WHERE wishlist_id = (SELECT wishlist_id FROM wishlist WHERE wishlistName = '?' AND username = '?')\n" +
+                    "AND wish_id = (SELECT wish_id FROM wishes WHERE wishName = '?');\n";
+
+            PreparedStatement stmt1 = conn.prepareStatement(SQL);
+            stmt1.setInt(1, wishlistID);
+
+        }
+    }
+*/
+
 }

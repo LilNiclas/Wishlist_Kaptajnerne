@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<link th:href="@{/createWishWT.css}" rel="stylesheet">
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>deletewishlist</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Delete wishlist</h1>
+    <form th:action="@{/home/delete/{wishlistID}(wishlistID=${wishlist.wishlistID})}" method="post">
+        <button type="submit">Delete wishlist</button>
+    </form>
+</div>
+</body>
+</html>
