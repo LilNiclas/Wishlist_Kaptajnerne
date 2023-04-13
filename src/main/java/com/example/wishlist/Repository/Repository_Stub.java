@@ -20,7 +20,7 @@ public class Repository_Stub implements  IRepository {
             }
         }
         return null;
-    }*/
+    }
 
     @Override
     public List<Wishlist> getWishlists() {

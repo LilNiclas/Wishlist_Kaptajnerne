@@ -164,6 +164,8 @@ public class RepositoryDB implements IRepository {
         }
     }
 
+
+    //Delete Wishlist
     public void deleteWishlist(Integer wishlistID) {
         String SQL = "DELETE FROM wishlist WHERE wishlist_id = ?";
         try {
@@ -181,6 +183,7 @@ public class RepositoryDB implements IRepository {
         }
     }
 
+    //Find wishlist by ID
     public Wishlist findWishlistByID(int wishlistID) {
         String SQL = "SELECT * FROM wishlist WHERE wishlist_id = ?;";
 
@@ -200,7 +203,9 @@ public class RepositoryDB implements IRepository {
         }
         return null;
     }
+
 /*
+    //Delete Wish
     public void deleteWish(int wishlistID, WishDTO wish) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
@@ -212,21 +217,16 @@ public class RepositoryDB implements IRepository {
 
             PreparedStatement stmt1 = conn.prepareStatement(SQL);
             stmt1.setInt(1, wishlistID);
-
         }
     }
 */
 
-    @Override
-    public void editwish(Wish wish) {
-
-    }
 
     @Override
     public void editWish(Wish wish) {
-
     }
 
+    //Edit Wish
     public void editWish(Wish wish, int wishlistID) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);

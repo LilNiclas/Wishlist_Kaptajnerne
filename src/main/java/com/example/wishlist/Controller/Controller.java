@@ -5,31 +5,21 @@ import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.User;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
-import com.example.wishlist.Repository.IRepository;
 import com.example.wishlist.Service.Service;
-import org.apache.catalina.core.ApplicationContext;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.catalina.valves.JsonErrorReportValve;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Controller
 @RequestMapping(path = "wishu")
 public class Controller {
 
-    IRepository repository;
     private Service service;
-    public Controller(Service service, @Qualifier("Repository") IRepository iRepository) {
+
+    public Controller(Service service) {
         this.service = service;
-        this.repository=iRepository;
     }
 
     //View Users
@@ -100,6 +90,7 @@ public class Controller {
         return "redirect:/wishu/home";
     }
 
+    //Edit Wish
     @GetMapping(value = {"/editWish"})
     public String showEditWish(HttpServletRequest request, @PathVariable("id") int id, Model model) {
         if (request.getSession().getAttribute("userId") == null) {
@@ -107,14 +98,14 @@ public class Controller {
         }
         int user1 = (int) request.getSession().getAttribute("userId");
         model.addAttribute("id", id);
-        model.addAttribute("wish", repository.getWishes(id));
+        model.addAttribute("wish", service.getWishes(id));
         return "editWish";
     }
 
     @PostMapping(value = {"/editWish"})
     public String editWish(@ModelAttribute Wish wish) {
         int id = wish.getWishID();
-        repository.editwish(wish);
+        service.editWish(wish);
         return "editWish" + id;
     }
 

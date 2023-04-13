@@ -53,4 +53,14 @@ public class Service {
     public List<User> getUsers() {
         return repositoryDB.getUsers();
     }
+
+    //Edit Wish
+    public void editWish(Wish wish, int wishlistID) {
+        repositoryDB.editWish(wish, wishlistID);
+    }
+
+    //Edit Wish
+    public void editWish(Wish wish){
+
+    }
 }

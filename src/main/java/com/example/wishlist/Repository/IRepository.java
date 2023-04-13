@@ -25,13 +25,16 @@ public interface IRepository {
     //Add Wish
     public void addWish(WishDTO wish, int wishlistID);
 
-    public void editwish(Wish wish);
+
     //View Users
     public List<User> getUsers();
 
     //Delete Wishlist
     public void deleteWishlist(Integer wishlistID);
 
+    //Edit Wish
+    public void editWish(Wish wish, int wishlistID);
 
-    void editWish(Wish wish);
+    //Edit Wish
+    public void editWish(Wish wish);
 }
