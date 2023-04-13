@@ -42,7 +42,7 @@ public class Controller {
     //View Wishes                               //localhost:8083/wishu/wishes/{wishlistID}
     @GetMapping(path = "wishes/{wishlistID}")
     public String showWishses(@PathVariable int wishlistID, Model model) {
-        List<Wish> wishes = service.getWishes(wishlistID);
+        List <Wish> wishes = service.getWishList(wishlistID);
         model.addAttribute("wishes", wishes);
         return "wishes";
     }
@@ -110,22 +110,21 @@ public class Controller {
 
 
     //Edit Wish                                 //localhost:8083/wishu/editWish
-    @GetMapping(value = {"/editWish"})
+    @GetMapping(value = {"home/editWish/{id}"})
     public String showEditWish(HttpServletRequest request, @PathVariable("id") int id, Model model) {
-        if (request.getSession().getAttribute("userId") == null) {
-            return "login";
-        }
-        int user1 = (int) request.getSession().getAttribute("userId");
         model.addAttribute("id", id);
-        model.addAttribute("wish", service.getWishes(id));
+        Wish wish = service.getWishes(id);
+        model.addAttribute("wish", wish);
         return "editWish";
     }
 
-    @PostMapping(value = {"/editWish"})
-    public String editWish(@ModelAttribute Wish wish) {
-        int id = wish.getWishID();
+
+
+    @PostMapping(value = {"home/editWish/{id}"})
+    public String editWish(@ModelAttribute Wish wish,@PathVariable int id) {
         service.editWish(wish);
-        return "editWish" + id;
+        int wishListId = service.findWishlistId(id);
+        return "redirect:/wishu/wishes/" + wishListId;
     }
 
    /* @DeleteMapping(value = {"/deleteWish"})
@@ -134,6 +133,5 @@ public class Controller {
         service.deleteWish(id);
         return "redirect:/wishu/home";
     }*/
-
 
 }

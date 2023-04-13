@@ -16,7 +16,7 @@ public interface IRepository {
     public List<Wishlist> getWishlists(String email);
 
     //View Wishes
-    public List<Wish> getWishes(int listID);
+    public Wish getWishes(int listID);
 
     //View Users
     public List<User> getUsers();

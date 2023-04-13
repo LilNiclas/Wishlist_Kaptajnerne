@@ -28,7 +28,7 @@ public class Repository_Stub implements  IRepository {
     }
 
     @Override
-    public List<Wish> getWishes(int listID) {
+    public Wish getWishes(int listID) {
         return null;
     }
 

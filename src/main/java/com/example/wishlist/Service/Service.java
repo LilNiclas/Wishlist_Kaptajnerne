@@ -25,8 +25,12 @@ public class Service {
     }
 
     //View Wishes
-    public List<Wish> getWishes(int wishlistID) {
+    public Wish getWishes(int wishlistID) {
         return repositoryDB.getWishes(wishlistID);
+    }
+
+    public List<Wish>getWishList(int wishlistID) {
+        return repositoryDB.getWishList(wishlistID);
     }
 
     //View Users
@@ -60,21 +64,25 @@ public class Service {
         repositoryDB.deleteWishlist(wishlistID);
     }
 
-
     //Edit Wish
     public void editWish(Wish wish, int wishlistID) {
-        repositoryDB.editWish(wish, wishlistID);
+         repositoryDB.editWish(wish, wishlistID);
     }
 
     //Edit Wish
     public void editWish(Wish wish){
+
     }
-/*
+
     public User getEmail () {
         return getEmail();
     }
 
     public void deleteWish (int id){
         repositoryDB.deleteWish(id);
-    }*/
-}
+    }
+    public int findWishlistId(int id){
+       return repositoryDB.findWishlistId(id);
+    }
+    }
+
