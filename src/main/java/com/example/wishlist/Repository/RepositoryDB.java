@@ -167,16 +167,25 @@ public class RepositoryDB implements IRepository {
 
     //Delete Wishlist
     public void deleteWishlist(Integer wishlistID) {
-        String SQL = "DELETE FROM wishlist WHERE wishlist_id = ?";
-        try {
-            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, wishlistID);
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Wishlist with ID " + wishlistID + " has been deleted.");
-            } else {
-                System.out.println("No wishlist with ID " + wishlistID + " found to delete.");
+        try (Connection conn = ConnectionManager.getConnection(db_url, uid, pwd)) {
+            // First delete all the records from wishlist_wishes table for the wishlist_id
+            String deleteWishlistWishesSQL = "DELETE FROM wishlist_wishes WHERE wishlist_id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteWishlistWishesSQL)) {
+                pstmt.setInt(1, wishlistID);
+                int rowsAffected = pstmt.executeUpdate();
+                System.out.println("Deleted " + rowsAffected + " records from wishlist_wishes table for wishlist_id = " + wishlistID);
+            }
+
+            // Then delete the record from wishlist table
+            String deleteWishlistSQL = "DELETE FROM wishlist WHERE wishlist_id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteWishlistSQL)) {
+                pstmt.setInt(1, wishlistID);
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Wishlist with ID " + wishlistID + " has been deleted.");
+                } else {
+                    System.out.println("No wishlist with ID " + wishlistID + " found to delete.");
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

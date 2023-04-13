@@ -78,16 +78,16 @@ public class Controller {
     }
 
     //Delete Wishlist
-    @GetMapping("home/delete/{wishlistID}")
+    @GetMapping("home/{email}/delete/{wishlistID}")
     public String showDeleteWishlist(@PathVariable("wishlistID") int wishlistID, Model model){
         model.addAttribute("wishlist", service.findWishlistByID(wishlistID));
         return "deleteWishlist";
     }
 
-    @PostMapping("home/delete/{wishlistID}")
+    @PostMapping("home/{email}/delete/{wishlistID}")
     public String deleteWishlist(@ModelAttribute("wishlistID") int wishlistID){
         service.deleteWishlist(wishlistID);
-        return "redirect:/wishu/home";
+        return "redirect:/wishu/home/";
     }
 
     //Edit Wish
