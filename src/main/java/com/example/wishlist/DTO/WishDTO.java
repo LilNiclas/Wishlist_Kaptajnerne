@@ -24,8 +24,6 @@ public class WishDTO {
         this.link = link;
     }
 
-
-
     public WishDTO () {
     }
 

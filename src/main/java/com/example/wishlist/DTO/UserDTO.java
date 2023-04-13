@@ -10,6 +10,14 @@ public class UserDTO {
         this.username = username;
         this.userID = userID;
     }
+    public UserDTO(String email, String username) {
+        this.email = email;
+        this.username = username;
+    }
+
+    public UserDTO() {
+    }
+
 
     public String getEmail() {
         return email;

@@ -1,5 +1,6 @@
 package com.example.wishlist.Service;
 
+import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.User;
@@ -28,6 +29,11 @@ public class Service {
         return repositoryDB.getWishes(wishlistID);
     }
 
+    //View Users
+    public List<User> getUsers() {
+        return repositoryDB.getUsers();
+    }
+
 
     //Add Wishlist
     public void addWishlist(WishlistDTO wishlist, String username) {
@@ -39,6 +45,11 @@ public class Service {
         repositoryDB.addWish(wish, wishlistID);
     }
 
+    public void addUser(UserDTO user) {
+        repositoryDB.addUser(user);
+    }
+
+
     //Find Wishlist
     public Wishlist findWishlistByID (int wishlistID) {
         return repositoryDB.findWishlistByID(wishlistID);
@@ -49,10 +60,6 @@ public class Service {
         repositoryDB.deleteWishlist(wishlistID);
     }
 
-    //View Users
-    public List<User> getUsers() {
-        return repositoryDB.getUsers();
-    }
 
     //Edit Wish
     public void editWish(Wish wish, int wishlistID) {
@@ -61,14 +68,13 @@ public class Service {
 
     //Edit Wish
     public void editWish(Wish wish){
-
     }
-
+/*
     public User getEmail () {
         return getEmail();
     }
 
     public void deleteWish (int id){
         repositoryDB.deleteWish(id);
-    }
+    }*/
 }

@@ -1,5 +1,6 @@
 package com.example.wishlist.Repository;
 
+import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.User;
@@ -77,33 +78,33 @@ public class RepositoryDB implements IRepository {
         }
     }
 
-
-   /* public void addWishlist(WishlistDTO wishlist, String username) {
+    //Add User
+    public void addUser(UserDTO user) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            //ID
-            int wishlistID = 0;
 
-            //insert list to wishlist
-            String SQL = "INSERT INTO wishlist (wishlist_id, wishlistName, username) " +
-                    "VALUES (?, ?, ?)";
+            int userID = 0;
+
+            //insert user to users
+            String SQL = "INSERT INTO users (username, email) " +
+                    "VALUES (?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, wishlistID);
-            pstmt.setString(2, wishlist.getListName());
-            pstmt.setString(3, wishlist.getUsername());
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getEmail());
             pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
 
             if (rs.next()) {
-                wishlistID = rs.getInt(1);
-                WishlistDTO list = new WishlistDTO(wishlist.getWishlistID(), wishlist.getListName(), wishlist.getUsername());
-                list.setWishlistID(wishlistID);
+                userID = rs.getInt(1);
+                UserDTO userDTO = new UserDTO(user.getEmail(), user.getUsername(), user.getUserID());
+                userDTO.setUserID(userID);
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
+
 
     //Add Wishlist
     @Override

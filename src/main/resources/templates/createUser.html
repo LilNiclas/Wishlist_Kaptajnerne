@@ -3,22 +3,29 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create User</title>
 </head>
 <body>
 
+
 <div align="center">
 
-    <h1>Create Wishlist</h1>
+    <h1>Create User</h1>
 
     <br>
 
-    <form th:action="@{/wishu/home/{username}/addwishlist(username=${username})}" method="post" th:object="${wishlist}">
+    <form th:action="@{/wishu/createUser}" method="post" th:object="${user}">
 
         <div class="form-group row">
             <div class="col-sm-10">
-                <label class="col-sm-2 col-form-label"> List name:</label>
-                <input type="text" th:field="${wishlist.listName}" placeholder="Faxxax Hanukkah">
+                <label class="col-sm-2 col-form-label"> Username:</label>
+                <input type="text" th:field="${user.username}" placeholder="Big D">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <label class="col-sm-2 col-form-label"> Email:</label>
+                <input type="text" th:field="${user.email}" placeholder="name@hotmail.com">
             </div>
         </div>
 

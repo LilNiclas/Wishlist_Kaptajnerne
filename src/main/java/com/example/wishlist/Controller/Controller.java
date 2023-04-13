@@ -1,5 +1,6 @@
 package com.example.wishlist.Controller;
 
+import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.User;
@@ -22,49 +23,64 @@ public class Controller {
         this.service = service;
     }
 
-    //View Users
-    @GetMapping (path = "")          //localhost:8083/wishu
-    public String showUsers (Model model) {
+    //View Users                               //localhost:8083/wishu
+    @GetMapping(path = "")
+    public String showUsers(Model model) {
         List<User> users = service.getUsers();
         model.addAttribute("user", users);
         return "users";
     }
 
-    //View Wishlists
-    @GetMapping(path = "home/{username}")            //localhost:8083/wishu/home/{username}
+    //View Wishlists                            //localhost:8083/wishu/home/{username}
+    @GetMapping(path = "home/{username}")
     public String showWishlists(@PathVariable String username, Model model) {
         List<Wishlist> wishlists = service.getWishlists(username);
         model.addAttribute("wishlists", wishlists);
         return "index";
     }
 
-    //View Wishes
-    @GetMapping(path = "wishes/{wishlistID}")  //localhost:8083/wishu/wishes/{listID}
-    public String showWishses (@PathVariable int wishlistID, Model model) {
+    //View Wishes                               //localhost:8083/wishu/wishes/{wishlistID}
+    @GetMapping(path = "wishes/{wishlistID}")
+    public String showWishses(@PathVariable int wishlistID, Model model) {
         List<Wish> wishes = service.getWishes(wishlistID);
         model.addAttribute("wishes", wishes);
         return "wishes";
     }
 
 
-    //Add Wishlist
-    @GetMapping(path = "home/{username}/addwishlist")      //localhost:8083/wishu/home/addwishlist
-    public String showCreateWishlist(Model model, @PathVariable("username")String username){
+    //Add User                                  //localhost:8083/wishu/createUser
+    @GetMapping(path = "/createUser")
+    public String showCreateUser(Model model) {
+        UserDTO user = new UserDTO();
+        model.addAttribute("user", user);
+        return "createUser";
+    }
+
+    @PostMapping(path = "/createUser")
+    public String addUser(@ModelAttribute("user") UserDTO user) {
+        service.addUser(user);
+        return "redirect:/wishu";
+    }
+
+
+    //Add Wishlist                              //localhost:8083/wishu/home/addwishlist
+    @GetMapping(path = "home/{username}/addwishlist")
+    public String showCreateWishlist(Model model, @PathVariable("username") String username) {
         WishlistDTO wishlist = new WishlistDTO();
         model.addAttribute("wishlist", wishlist);
         model.addAttribute("username", username);
         return "createWishlist";
     }
 
-    @PostMapping(path = "home/{username}/addwishlist")      //localhost:8083/wishu/home/addwishlist
-    public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlist,@PathVariable("username") String username){
+    @PostMapping(path = "home/{username}/addwishlist")
+    public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlist, @PathVariable("username") String username) {
         service.addWishlist(wishlist, username);
         return "redirect:/wishu";
     }
 
 
-  //Add Wish
-    @GetMapping(path = "home/wishlists/{wishlistID}/addwish")    //localhost:8083/wishu/home/addwishlist
+    //Add Wish                                  //localhost:8083/wishu/home/{wis}hlistID}/addwish
+    @GetMapping(path = "home/wishlists/{wishlistID}/addwish")
     public String showCreateWish(Model model, @PathVariable("wishlistID") int wishlistID) {
         WishDTO wish = new WishDTO();
         model.addAttribute("wish", wish);
@@ -72,26 +88,28 @@ public class Controller {
         return "createWish";
     }
 
-    @PostMapping(path = "home/wishlists/{wishlistID}/addwish")     //localhost:8083/wishu/home/addwishlist
+    @PostMapping(path = "home/wishlists/{wishlistID}/addwish")
     public String addWish(@ModelAttribute("wish") WishDTO wishDTO, @PathVariable("wishlistID") int wishlistID) {
         service.addWish(wishDTO, wishlistID);
         return "redirect:/wishu/wishes/" + wishlistID;
     }
 
-    //Delete Wishlist
+
+    //Delete Wishlist                           //localhost:8083/wishu/home/{email}/delete/{wishlistID}
     @GetMapping("home/{email}/delete/{wishlistID}")
-    public String showDeleteWishlist(@PathVariable("wishlistID") int wishlistID, Model model){
+    public String showDeleteWishlist(@PathVariable("wishlistID") int wishlistID, Model model) {
         model.addAttribute("wishlist", service.findWishlistByID(wishlistID));
         return "deleteWishlist";
     }
 
     @PostMapping("home/{email}/delete/{wishlistID}")
-    public String deleteWishlist(@ModelAttribute("wishlistID") int wishlistID){
+    public String deleteWishlist(@ModelAttribute("wishlistID") int wishlistID) {
         service.deleteWishlist(wishlistID);
-        return "redirect:/wishu/home/";
+        return "redirect:/wishu";
     }
 
-    //Edit Wish
+
+    //Edit Wish                                 //localhost:8083/wishu/editWish
     @GetMapping(value = {"/editWish"})
     public String showEditWish(HttpServletRequest request, @PathVariable("id") int id, Model model) {
         if (request.getSession().getAttribute("userId") == null) {
@@ -110,12 +128,12 @@ public class Controller {
         return "editWish" + id;
     }
 
-    @DeleteMapping(value = {"/deleteWish"})
+   /* @DeleteMapping(value = {"/deleteWish"})
     public String deleteWish (@ModelAttribute Wish wish){
         int id = wish.getWishID();
         service.deleteWish(id);
         return "redirect:/wishu/home";
-    }
+    }*/
 
 
 }
