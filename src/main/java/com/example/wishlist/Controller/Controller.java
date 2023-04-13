@@ -109,5 +109,12 @@ public class Controller {
         return "editWish" + id;
     }
 
+    @DeleteMapping(value = {"/deleteWish"})
+    public String deleteWish (@ModelAttribute Wish wish){
+        int id = wish.getWishID();
+        service.deleteWish(id);
+        return "redirect:/wishu/home";
+    }
+
 
 }

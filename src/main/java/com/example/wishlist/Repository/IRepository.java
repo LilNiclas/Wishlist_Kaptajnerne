@@ -37,4 +37,6 @@ public interface IRepository {
 
     //Edit Wish
     public void editWish(Wish wish);
+
+    public void deleteWish (int id);
 }

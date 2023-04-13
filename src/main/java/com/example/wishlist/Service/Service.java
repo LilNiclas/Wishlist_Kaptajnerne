@@ -61,6 +61,9 @@ public class Service {
 
     //Edit Wish
     public void editWish(Wish wish){
+    }
 
+    public void deleteWish (int id){
+        repositoryDB.deleteWish(id);
     }
 }

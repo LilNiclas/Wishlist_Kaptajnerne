@@ -19,10 +19,10 @@ public class RepositoryDB implements IRepository {
     @Value("jdbc:mysql://localhost:3306/wishlist")
     private String db_url;
 
-    @Value("TBK")
+    @Value("SBD")
     private String uid;
 
-    @Value("1234")
+    @Value("Simo053d")
     private String pwd;
 
 
@@ -204,22 +204,22 @@ public class RepositoryDB implements IRepository {
         return null;
     }
 
-/*
+
     //Delete Wish
-    public void deleteWish(int wishlistID, WishDTO wish) {
+    public void deleteWish(int id) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            int wishID = 0;
-
-            String SQL = "DELETE FROM wishlist_wishes \n" +
-                    "WHERE wishlist_id = (SELECT wishlist_id FROM wishlist WHERE wishlistName = '?' AND username = '?')\n" +
-                    "AND wish_id = (SELECT wish_id FROM wishes WHERE wishName = '?');\n";
-
-            PreparedStatement stmt1 = conn.prepareStatement(SQL);
-            stmt1.setInt(1, wishlistID);
+            String SQL = "delete from wishes where wish_id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(SQL)) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
-*/
 
 
     @Override
