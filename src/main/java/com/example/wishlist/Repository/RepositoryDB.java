@@ -20,10 +20,10 @@ public class RepositoryDB implements IRepository {
     @Value("jdbc:mysql://localhost:3306/wishlist")
     private String db_url;
 
-    @Value("Kjartan")
+    @Value("Niclas")
     private String uid;
 
-    @Value("1234")
+    @Value("12345")
     private String pwd;
 
 
@@ -53,55 +53,49 @@ public class RepositoryDB implements IRepository {
     }
 
     //View Wishes
-
-
     @Override
-    public Wish getWishes(int id) {
+    public List<Wish> getWishes(int wishlistID) {
+        List<Wish> wishes = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
             String SQL = "SELECT wish_id, wishName, price, description, link FROM wishes INNER JOIN wishlist_wishes USING(wish_id) WHERE wishlist_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(SQL);
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, wishlistID);
             ResultSet rs = pstmt.executeQuery();
-            Wish wish1=null;
+
             while (rs.next()) {
                 int wishID = rs.getInt("wish_id");
-                String wishName = rs.getString("wishName");
+                String itemName = rs.getString("wishName");
                 double price = rs.getDouble("price");
                 String description = rs.getString("description");
                 String link = rs.getString("link");
-                wish1 = new Wish(wishID, wishName, price, description, link);
+
+                wishes.add(new Wish(wishID, itemName, price, description, link));
             }
-
-            return wish1;
-
-        } catch (SQLException ex) {
-            return null;
+            return wishes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public List<Wish>getWishList(int id) {
+    //View Users
+    @Override
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT wish_id, wishName, price, description, link FROM wishes INNER JOIN wishlist_wishes USING(wish_id) WHERE wishlist_id = ?";
-            PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            List<Wish> list = new ArrayList<>();
-            if (rs.next()) {
-                int wishId = rs.getInt("WISH_ID");
-                String wishName = rs.getString("WISHNAME");
-                Double price = rs.getDouble("price");
-                String Description = rs.getString("DESCRIPTION");
-                String link = rs.getString("link");
-                Wish wish1 = new Wish(wishId, wishName, price, Description, link);
-                list.add(wish1);
+            String SQL = "SELECT username, email FROM users;";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String email = rs.getString("email");
+                users.add(new User(username, email));
             }
-
-            return list;
-
-        } catch (SQLException ex) {
-            return null;
+            return users;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -193,27 +187,6 @@ public class RepositoryDB implements IRepository {
                 pstmt.executeUpdate();
             }
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    //Get Users
-    @Override
-    public List<User> getUsers() {
-        List<User> users = new ArrayList<>();
-        try {
-            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT username, email FROM users;";
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(SQL);
-
-            while (rs.next()) {
-                String username = rs.getString("username");
-                String email = rs.getString("email");
-                users.add(new User(username, email));
-            }
-            return users;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -327,6 +300,59 @@ public class RepositoryDB implements IRepository {
         }
         return wishlistId;
     }
+
+    //View Wish2
+    @Override
+    public Wish getWishes2(int id) {
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "SELECT wish_id, wishName, price, description, link FROM wishes INNER JOIN wishlist_wishes USING(wish_id) WHERE wishlist_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            Wish wish1=null;
+            while (rs.next()) {
+                int wishID = rs.getInt("wish_id");
+                String wishName = rs.getString("wishName");
+                double price = rs.getDouble("price");
+                String description = rs.getString("description");
+                String link = rs.getString("link");
+                wish1 = new Wish(wishID, wishName, price, description, link);
+            }
+
+            return wish1;
+
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+
+    //View Wishes2
+    public List<Wish>getWishList(int id) {
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "SELECT wish_id, wishName, price, description, link FROM wishes INNER JOIN wishlist_wishes USING(wish_id) WHERE wishlist_id = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            List<Wish> list = new ArrayList<>();
+            if (rs.next()) {
+                int wishId = rs.getInt("WISH_ID");
+                String wishName = rs.getString("WISHNAME");
+                Double price = rs.getDouble("price");
+                String Description = rs.getString("DESCRIPTION");
+                String link = rs.getString("link");
+                Wish wish1 = new Wish(wishId, wishName, price, Description, link);
+                list.add(wish1);
+            }
+
+            return list;
+
+        } catch (SQLException ex) {
+            return null;
+        }
+    }
+
 
 
 }

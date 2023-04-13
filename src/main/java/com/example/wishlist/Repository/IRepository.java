@@ -16,7 +16,7 @@ public interface IRepository {
     public List<Wishlist> getWishlists(String email);
 
     //View Wishes
-    public Wish getWishes(int listID);
+    public List<Wish> getWishes(int wishlistID);
 
     //View Users
     public List<User> getUsers();
@@ -47,6 +47,9 @@ public interface IRepository {
 
     //Find wishlist by ID
     Wishlist findWishlistByID(int wishlistID);
+
+    //View Wishes2
+    public Wish getWishes2(int id);
 
 
 }

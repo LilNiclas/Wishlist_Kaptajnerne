@@ -42,7 +42,7 @@ public class Controller {
     //View Wishes                               //localhost:8083/wishu/wishes/{wishlistID}
     @GetMapping(path = "wishes/{wishlistID}")
     public String showWishses(@PathVariable int wishlistID, Model model) {
-        List <Wish> wishes = service.getWishList(wishlistID);
+        List<Wish> wishes = service.getWishes(wishlistID);
         model.addAttribute("wishes", wishes);
         return "wishes";
     }
@@ -113,7 +113,7 @@ public class Controller {
     @GetMapping(value = {"home/editWish/{id}"})
     public String showEditWish(HttpServletRequest request, @PathVariable("id") int id, Model model) {
         model.addAttribute("id", id);
-        Wish wish = service.getWishes(id);
+        Wish wish = service.getWishes2(id);
         model.addAttribute("wish", wish);
         return "editWish";
     }
