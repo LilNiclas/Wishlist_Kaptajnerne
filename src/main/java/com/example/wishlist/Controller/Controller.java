@@ -31,9 +31,9 @@ public class Controller {
     }
 
     //View Wishlists
-    @GetMapping(path = "home/{email}")            //localhost:8083/wishu/home/{email}
-    public String showWishlists(@PathVariable String email, Model model) {
-        List<Wishlist> wishlists = service.getWishlists(email);
+    @GetMapping(path = "home/{username}")            //localhost:8083/wishu/home/{username}
+    public String showWishlists(@PathVariable String username, Model model) {
+        List<Wishlist> wishlists = service.getWishlists(username);
         model.addAttribute("wishlists", wishlists);
         return "index";
     }
@@ -48,23 +48,24 @@ public class Controller {
 
 
     //Add Wishlist
-    @GetMapping(path = "home/addwishlist")      //localhost:8083/wishu/home/addwishlist
-    public String showCreateWishlist(Model model){
+    @GetMapping(path = "home/{username}/addwishlist")      //localhost:8083/wishu/home/addwishlist
+    public String showCreateWishlist(Model model, @PathVariable("username")String username){
         WishlistDTO wishlist = new WishlistDTO();
         model.addAttribute("wishlist", wishlist);
+        model.addAttribute("username", username);
         return "createWishlist";
     }
 
-    @PostMapping(path = "home/addwishlist")      //localhost:8083/wishu/home/addwishlist
-    public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlist){
-        service.addWishlist(wishlist);
-        return "redirect:/wishu/home";
+    @PostMapping(path = "home/{username}/addwishlist")      //localhost:8083/wishu/home/addwishlist
+    public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlist,@PathVariable("username") String username){
+        service.addWishlist(wishlist, username);
+        return "redirect:/wishu";
     }
 
 
   //Add Wish
     @GetMapping(path = "home/wishlists/{wishlistID}/addwish")    //localhost:8083/wishu/home/addwishlist
-    public String showCreateWish(@PathVariable("wishlistID") int wishlistID, Model model) {
+    public String showCreateWish(Model model, @PathVariable("wishlistID") int wishlistID) {
         WishDTO wish = new WishDTO();
         model.addAttribute("wish", wish);
         model.addAttribute("wishlistIDs", wishlistID);

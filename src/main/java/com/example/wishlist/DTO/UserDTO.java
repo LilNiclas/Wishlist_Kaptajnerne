@@ -1,12 +1,14 @@
 package com.example.wishlist.DTO;
 
 public class UserDTO {
+    private int userID;
     private String email;
     private String username;
 
-    public UserDTO(String email, String username) {
+    public UserDTO(String email, String username, int userID) {
         this.email = email;
         this.username = username;
+        this.userID = userID;
     }
 
     public String getEmail() {
@@ -23,5 +25,13 @@ public class UserDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void  setUserID(int userID) {
+        this.userID = userID;
     }
 }

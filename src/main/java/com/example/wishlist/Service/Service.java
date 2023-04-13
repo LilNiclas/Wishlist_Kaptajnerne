@@ -19,8 +19,8 @@ public class Service {
     }
 
     //View Wishlists
-    public List<Wishlist> getWishlists(String email) {
-        return repositoryDB.getWishlists(email);
+    public List<Wishlist> getWishlists(String username) {
+        return repositoryDB.getWishlists(username);
     }
 
     //View Wishes
@@ -30,8 +30,8 @@ public class Service {
 
 
     //Add Wishlist
-    public void addWishlist(WishlistDTO wishlist) {
-        repositoryDB.addWishlist(wishlist);
+    public void addWishlist(WishlistDTO wishlist, String username) {
+        repositoryDB.addWishlist(wishlist, username);
     }
 
     //Add Wish

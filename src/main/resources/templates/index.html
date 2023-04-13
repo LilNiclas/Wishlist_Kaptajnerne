@@ -24,7 +24,7 @@
 
 </table>
 <div class="createWishlist">
-<a th:href="@{/wishu/home/addwishlist}">
+<a th:href="@{/wishu/home/{username}/addwishlist(username=${username})}">
     <button>Create new wishlist</button>
 </a>
 </div>
