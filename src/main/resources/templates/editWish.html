@@ -18,7 +18,7 @@
         <label for="Link">Link:</label>
         <input id="Link" type="text" th:name="Link" th:value="${wish.Link}" required>
         <input type="hidden" th:name="wishID" th:value="${wish.wishID}">
-        <input type="hidden" th:name="wishlistId" th:value="${id}">
+        <input type="hidden" name="wishlistID" value="${id}">
         <button type="submit">Save</button>
     </form>
 </div>

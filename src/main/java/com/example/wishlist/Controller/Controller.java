@@ -122,7 +122,8 @@ public class Controller {
 
     @PostMapping(value = {"home/editWish/{id}"})
     public String editWish(@ModelAttribute Wish wish,@PathVariable int id) {
-        service.editWish(wish);
+        service.editWish(wish, id);
+
         int wishListId = service.findWishlistId(id);
         return "redirect:/wishu/wishes/" + wishListId;
     }
