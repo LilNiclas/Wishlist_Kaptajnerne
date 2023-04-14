@@ -39,7 +39,7 @@
 <a th:href="@{/wishu/home/wishlists/{wishlistID}/addwish(wishlistID=${wishlistID})}">
     <button type="button" class="btn btn.secondary btn-lg btn-block">Add new wish</button>
 </a>
-<a th:href="@{/wishu/home}">
+<a th:href="@{/wishu/wishes/{wishlistID}(wishlistID=${wishlistID})}">
     <button type="button" class="btn btn-secondary btn-lg btn-block">Return to wishlists</button>
 </a>
 

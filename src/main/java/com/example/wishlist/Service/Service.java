@@ -67,7 +67,6 @@ public class Service {
 
     //Edit Wish
     public void editWish(Wish wish) {
-
     }
 
     public User getEmail() {

@@ -268,14 +268,14 @@ public class RepositoryDB implements IRepository {
     public void editWish(Wish wish, int wishlistID) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "UPDATE wishes SET wishName = ?, price = ?, description = ?, link = ? WHERE wish_id = (SELECT wish_id FROM wishlist_wishes WHERE wishlist_id = ? AND wish_id = ?)";
+            String SQL = "UPDATE wishes SET wishName = ?, price = ?, description = ?, link = ? WHERE wish_id = ?";
             try (PreparedStatement stmt = conn.prepareStatement(SQL)) {
                 stmt.setString(1, wish.getItemName());
                 stmt.setDouble(2, wish.getPrice());
                 stmt.setString(3, wish.getDescription());
                 stmt.setString(4, wish.getLink());
                 stmt.setInt(5, wishlistID);
-                stmt.setInt(6, wish.getWishID());
+                // stmt.setInt(6, wish.getWishID());
                 stmt.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -304,9 +304,10 @@ public class RepositoryDB implements IRepository {
     //View Wish2
     @Override
     public Wish getWishes2(int id) {
+        System.out.println(id);
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT wish_id, wishName, price, description, link FROM wishes INNER JOIN wishlist_wishes USING(wish_id) WHERE wishlist_id = ?";
+            String SQL = "SELECT wish_id, wishName, price, description, link FROM wishes WHERE wish_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
