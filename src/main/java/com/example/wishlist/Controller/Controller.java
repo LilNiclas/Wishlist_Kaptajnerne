@@ -140,5 +140,4 @@ public class Controller {
         service.deleteWish(wishID);
         return "redirect:/wishu/home";
     }
-
 }
