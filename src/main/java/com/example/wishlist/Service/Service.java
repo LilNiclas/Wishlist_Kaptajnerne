@@ -15,6 +15,8 @@ public class Service {
 
     private RepositoryDB repositoryDB;
 
+    private Wishlist wishlist;
+
     public Service(RepositoryDB repositoryDB) {
         this.repositoryDB = repositoryDB;
     }
@@ -45,6 +47,7 @@ public class Service {
         repositoryDB.addWish(wish, wishlistID);
     }
 
+    //Add User
     public void addUser(UserDTO user) {
         repositoryDB.addUser(user);
     }
@@ -88,6 +91,12 @@ public class Service {
     public Wish getWishes2(int wishlistID) {
         return repositoryDB.getWishes2(wishlistID);
     }
+
+    public int getWishlistID(){
+        return wishlist.getWishlistID();
+    }
+
+
 
 }
 
