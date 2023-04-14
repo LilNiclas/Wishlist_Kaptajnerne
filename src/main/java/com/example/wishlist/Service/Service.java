@@ -15,6 +15,8 @@ public class Service {
 
     private RepositoryDB repositoryDB;
 
+    private Wishlist wishlist;
+
     public Service(RepositoryDB repositoryDB) {
         this.repositoryDB = repositoryDB;
     }
@@ -76,6 +78,9 @@ public class Service {
     public void deleteWish(int id) {
         repositoryDB.deleteWish(id);
     }
+    public Wish findWishByID(int id){
+        return repositoryDB.findWishByID(id);
+    }
 
     public int findWishlistId(int id) {
         return repositoryDB.findWishlistId(id);
@@ -89,6 +94,12 @@ public class Service {
     public String findUsernameByWishlistID(int wishlistID) {
         return repositoryDB.findUsernameByWishlistID(wishlistID);
     }
+
+    public int getWishlistID(){
+        return wishlist.getWishlistID();
+    }
+
+
 
 }
 
