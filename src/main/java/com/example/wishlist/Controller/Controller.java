@@ -127,11 +127,18 @@ public class Controller {
         return "redirect:/wishu/wishes/" + wishListId;
     }
 
-   /* @DeleteMapping(value = {"/deleteWish"})
-    public String deleteWish (@ModelAttribute Wish wish){
+    // Delete wish
+    @DeleteMapping(value = {"/deleteWish/{wishID}"})
+    public String showDeleteWish(@ModelAttribute Wish wish) {
         int id = wish.getWishID();
-        service.deleteWish(id);
+        service.findWishByID(id);
+        return "deleteWish";
+    }
+
+    @PostMapping("/deleteWish/{wishID}")
+    public String deleteWish(@PathVariable("wishlistID") int wishID) {
+        service.deleteWish(wishID);
         return "redirect:/wishu/home";
-    }*/
+    }
 
 }

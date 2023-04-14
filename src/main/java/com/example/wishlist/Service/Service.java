@@ -76,6 +76,9 @@ public class Service {
     public void deleteWish(int id) {
         repositoryDB.deleteWish(id);
     }
+    public Wish findWishByID(int id){
+        return repositoryDB.findWishByID(id);
+    }
 
     public int findWishlistId(int id) {
         return repositoryDB.findWishlistId(id);
