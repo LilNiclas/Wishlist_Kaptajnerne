@@ -86,5 +86,9 @@ public class Service {
         return repositoryDB.getWishes2(wishlistID);
     }
 
+    public String findUsernameByWishlistID(int wishlistID) {
+        return repositoryDB.findUsernameByWishlistID(wishlistID);
+    }
+
 }
 

@@ -43,6 +43,8 @@ public class Controller {
     @GetMapping(path = "wishes/{wishlistID}")
     public String showWishses(@PathVariable int wishlistID, Model model) {
         List<Wish> wishes = service.getWishes(wishlistID);
+        String username = service.findUsernameByWishlistID(wishlistID);
+        model.addAttribute("username",username);
         model.addAttribute("wishes", wishes);
         return "wishes";
     }

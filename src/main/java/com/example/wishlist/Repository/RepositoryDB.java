@@ -284,6 +284,7 @@ public class RepositoryDB implements IRepository {
             throw new RuntimeException(e);
         }
     }
+
     public int findWishlistId(int wishId) {
         int wishlistId = 0;
         try {
@@ -311,7 +312,7 @@ public class RepositoryDB implements IRepository {
             PreparedStatement pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
-            Wish wish1=null;
+            Wish wish1 = null;
             while (rs.next()) {
                 int wishID = rs.getInt("wish_id");
                 String wishName = rs.getString("wishName");
@@ -329,7 +330,7 @@ public class RepositoryDB implements IRepository {
     }
 
     //View Wishes2
-    public List<Wish>getWishList(int id) {
+    public List<Wish> getWishList(int id) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
             String SQL = "SELECT wish_id, wishName, price, description, link FROM wishes INNER JOIN wishlist_wishes USING(wish_id) WHERE wishlist_id = ?";
@@ -354,6 +355,24 @@ public class RepositoryDB implements IRepository {
         }
     }
 
-
+    public String findUsernameByWishlistID(int wishlistID) {
+        String username = null;
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "SELECT USERNAME FROM USERS INNER JOIN WISHLIST USING (USERNAME) WHERE WISHLIST_ID=? ";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, wishlistID);
+            ResultSet rs = ps.executeQuery();
+            List<Wish> list = new ArrayList<>();
+            if (rs.next()) {
+                username = rs.getString("username");
+            }
+            return username;
+        } catch (SQLException ex) {
+            throw new RuntimeException();
+        }
+    }
 
 }
+
+
