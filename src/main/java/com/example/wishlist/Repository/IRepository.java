@@ -48,7 +48,8 @@ public interface IRepository {
     //Find wishlist by ID
     Wishlist findWishlistByID(int wishlistID);
 
-    Wish findWishByID (int wishID);
+    //Find wish by ID
+    Wish findWishByID(int wishID);
 
     //View Wishes2
     public Wish getWishes2(int id);

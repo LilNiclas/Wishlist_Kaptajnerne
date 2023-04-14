@@ -17,13 +17,13 @@ import java.util.List;
 public class RepositoryDB implements IRepository {
 
 
-    @Value("jdbc:mysql://localhost:3306/wishlist")
+    @Value("${spring.datasource.url}")
     private String db_url;
 
-    @Value("Niclas")
+    @Value("${spring.datasource.username}")
     private String uid;
 
-    @Value("12345")
+    @Value("${spring.datasource.password}")
     private String pwd;
 
 
@@ -252,31 +252,6 @@ public class RepositoryDB implements IRepository {
         }
     }
 
-    //Find wish by ID
-    @Override
-    public Wish findWishByID(int wishID) {
-        String SQL = "SELECT * FROM wishes WHERE wish_id = ?;";
-
-        try {
-            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, wishID);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                int wishId = rs.getInt("wish_Id");
-                String itemName = rs.getString("itemName");
-                double price = rs.getDouble("price");
-                String description = rs.getString("description");
-                String link = rs.getString("link");
-                return new Wish(wishId, itemName, price, description, link);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
     //Edit Wish
     @Override
     public void editWish(Wish wish) {
@@ -301,23 +276,6 @@ public class RepositoryDB implements IRepository {
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public int findWishlistId(int wishId) {
-        int wishlistId = 0;
-        try {
-            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT wishlist_id FROM wishlist_wishes WHERE WISH_ID = ?";
-            PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setInt(1, wishId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                wishlistId = rs.getInt("WISHLIST_ID");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return wishlistId;
     }
 
     //View Wish2
@@ -389,6 +347,49 @@ public class RepositoryDB implements IRepository {
         } catch (SQLException ex) {
             throw new RuntimeException();
         }
+    }
+
+
+    //Find wish by ID
+    @Override
+    public Wish findWishByID(int wishID) {
+        Wish wish = null;
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "SELECT * FROM wishes WHERE wish_id = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, wishID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int wishId = rs.getInt("wish_Id");
+                String itemName = rs.getString("itemName");
+                double price = rs.getDouble("price");
+                String description = rs.getString("description");
+                String link = rs.getString("link");
+                wish = new Wish(wishId, itemName, price, description, link);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return wish;
+    }
+
+    //Find wishlist by ID
+    public int findWishlistId(int wishId) {
+        int wishlistId = 0;
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "SELECT wishlist_id FROM wishlist_wishes WHERE WISH_ID = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, wishId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                wishlistId = rs.getInt("WISHLIST_ID");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return wishlistId;
     }
 
 }

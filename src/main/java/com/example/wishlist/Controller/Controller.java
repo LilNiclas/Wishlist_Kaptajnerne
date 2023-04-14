@@ -106,8 +106,9 @@ public class Controller {
 
     @PostMapping("home/delete/{wishlistID}")
     public String deleteWishlist(@ModelAttribute("wishlistID") int wishlistID) {
+        String username = service.findUsernameByWishlistID(wishlistID);
         service.deleteWishlist(wishlistID);
-        return "redirect:/wishu/";
+        return "redirect:/wishu/home/" + username;
     }
 
 
@@ -120,8 +121,6 @@ public class Controller {
         return "editWish";
     }
 
-
-
     @PostMapping(value = {"home/editWish/{id}"})
     public String editWish(@ModelAttribute Wish wish,@PathVariable int id) {
         service.editWish(wish, id);
@@ -129,17 +128,20 @@ public class Controller {
         return "redirect:/wishu/wishes/" + wishListId;
     }
 
+
+
+
     // Delete wish
-    @DeleteMapping(value = {"/deleteWish/{wishID}"})
-    public String showDeleteWish(@ModelAttribute Wish wish) {
-        int id = wish.getWishID();
-        service.findWishByID(id);
+    @GetMapping(value = {"/deleteWish/{wishID}"})
+    public String showDeleteWish(@PathVariable  int wishID, Model model) {
+        model.addAttribute("wishID", service.findWishByID(wishID));
         return "deleteWish";
     }
 
     @PostMapping("/deleteWish/{wishID}")
-    public String deleteWish(@PathVariable("wishlistID") int wishID) {
+    public String deleteWish(@ModelAttribute ("wishlistID") int wishID) {
+        int wishlistID = service.findWishlistId(wishID);
         service.deleteWish(wishID);
-        return "redirect:/wishu/home";
+        return "redirect:/wishu/wishes/" + wishlistID;
     }
 }

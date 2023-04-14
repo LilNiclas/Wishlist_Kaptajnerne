@@ -7,7 +7,7 @@
 <body>
 <div class="container mt-5">
   <h1>Delete wish</h1>
-  <form th:action="@{/wishu/deleteWish(wishId=${wish.wishID})}" method="post">
+  <form th:action="@{/wishu/deleteWish/{wishID}(wishID=${wishID})}" method="post">
     <button type="submit">Delete wish</button>
   </form>
 </div>

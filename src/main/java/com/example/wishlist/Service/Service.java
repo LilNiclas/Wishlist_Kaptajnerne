@@ -82,8 +82,8 @@ public class Service {
         return repositoryDB.findWishByID(id);
     }
 
-    public int findWishlistId(int id) {
-        return repositoryDB.findWishlistId(id);
+    public int findWishlistId(int wishID) {
+        return repositoryDB.findWishlistId(wishID);
     }
 
     //View Wish2
