@@ -20,10 +20,10 @@ public class RepositoryDB implements IRepository {
     @Value("jdbc:mysql://localhost:3306/wishlist")
     private String db_url;
 
-    @Value("Niclas")
+    @Value("SBD")
     private String uid;
 
-    @Value("12345")
+    @Value("Simo053d")
     private String pwd;
 
 
