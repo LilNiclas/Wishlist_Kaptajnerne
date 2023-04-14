@@ -35,8 +35,8 @@ public interface IRepository {
     //Delete Wishlist
     public void deleteWishlist(Integer wishlistID);
 
-    /*    //Delete Wish
-    public void deleteWish (int id);*/
+    //Delete Wish
+    public void deleteWish (int id);
 
 
     //Edit Wish
