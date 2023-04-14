@@ -20,10 +20,10 @@ public class RepositoryDB implements IRepository {
     @Value("jdbc:mysql://localhost:3306/wishlist")
     private String db_url;
 
-    @Value("SBD")
+    @Value("Niclas")
     private String uid;
 
-    @Value("Simo053d")
+    @Value("12345")
     private String pwd;
 
 
@@ -236,49 +236,32 @@ public class RepositoryDB implements IRepository {
 
 
     //Delete Wish
-    public void deleteWish(int id) {
+
+    /*@Override
+    public void deleteWish(int wishlistID, WishDTO wish) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "delete from wishes where wish_id = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(SQL)) {
-                stmt.setInt(1, id);
-                stmt.executeUpdate();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+            int wishID = 0;
 
-    //Find wish by ID
-    public Wish findWishByID(int wishID) {
-        String SQL = "SELECT * FROM wishes WHERE wish_id = ?;";
+            String SQL = "DELETE FROM wishlist_wishes \n" +
+                    "WHERE wishlist_id = (SELECT wishlist_id FROM wishlist WHERE wishlistName = '?' AND username = '?')\n" +
+                    "AND wish_id = (SELECT wish_id FROM wishes WHERE wishName = '?');\n";
 
-        try {
-            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, wishID);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                int wishId = rs.getInt("wish_Id");
-                String itemName = rs.getString("itemName");
-                double price = rs.getDouble("price");
-                String description = rs.getString("description");
-                String link = rs.getString("link");
-                return new Wish(wishId, itemName, price, description, link);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            PreparedStatement stmt1 = conn.prepareStatement(SQL);
+            stmt1.setInt(1, wishlistID);
         }
-        return null;
-    }
+    }*/
+
 
     //Edit Wish
     @Override
     public void editWish(Wish wish) {
     }
 
+    //@Override
+    public void deleteWish(int id) {
+
+    }
 
     //Edit Wish
     @Override

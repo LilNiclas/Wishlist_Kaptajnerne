@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<link th:href="@{/indexWT.css}" rel="stylesheet">
+<link th:href="@{/wishlistWT.css}" rel="stylesheet">
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
         <p class="card-text">info.</p>
         <a th:href="@{/wishu/wishes/{wishlistID}(wishlistID=${list.wishlistID})}"
            class="card-link">Wishes</a>
-        <a th:href="@{/wishu/home/{email}/delete/{wishlistID}(wishlistID=${list.wishlistID})}"
+        <a th:href="@{/wishu/home/delete/{wishlistID}(wishlistID=${list.wishlistID})}"
            class="card-link">Delete wishlist</a>
     </div>
 

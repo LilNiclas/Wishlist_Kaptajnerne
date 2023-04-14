@@ -36,7 +36,7 @@ public class Controller {
     public String showWishlists(@PathVariable String username, Model model) {
         List<Wishlist> wishlists = service.getWishlists(username);
         model.addAttribute("wishlists", wishlists);
-        return "index";
+        return "wishlist";
     }
 
     //View Wishes                               //localhost:8083/wishu/wishes/{wishlistID}
@@ -75,7 +75,7 @@ public class Controller {
     @PostMapping(path = "home/{username}/addwishlist")
     public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlist, @PathVariable("username") String username) {
         service.addWishlist(wishlist, username);
-        return "redirect:/wishu";
+        return "redirect:/wishu/home/" + username;
     }
 
 
@@ -96,16 +96,16 @@ public class Controller {
 
 
     //Delete Wishlist                           //localhost:8083/wishu/home/{email}/delete/{wishlistID}
-    @GetMapping("home/{email}/delete/{wishlistID}")
+    @GetMapping("home/delete/{wishlistID}")
     public String showDeleteWishlist(@PathVariable("wishlistID") int wishlistID, Model model) {
         model.addAttribute("wishlist", service.findWishlistByID(wishlistID));
         return "deleteWishlist";
     }
 
-    @PostMapping("home/{email}/delete/{wishlistID}")
+    @PostMapping("home/delete/{wishlistID}")
     public String deleteWishlist(@ModelAttribute("wishlistID") int wishlistID) {
         service.deleteWishlist(wishlistID);
-        return "redirect:/wishu";
+        return "redirect:/wishu/";
     }
 
 
