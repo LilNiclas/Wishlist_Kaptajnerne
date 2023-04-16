@@ -8,6 +8,7 @@ import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Repository.RepositoryDB;
 
+import javax.security.auth.login.LoginException;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -71,6 +72,10 @@ public class Service {
     public void editWish(Wish wish) {
     }
 
+    public void editUser(User user) throws LoginException {
+        repositoryDB.editUser(user );
+    }
+
     public User getEmail() {
         return getEmail();
     }
@@ -98,8 +103,6 @@ public class Service {
     public int getWishlistID(){
         return wishlist.getWishlistID();
     }
-
-
 
 }
 

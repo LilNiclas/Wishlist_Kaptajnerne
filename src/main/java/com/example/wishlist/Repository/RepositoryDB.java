@@ -9,6 +9,7 @@ import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Util.ConnectionManager;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.security.auth.login.LoginException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -277,6 +278,23 @@ public class RepositoryDB implements IRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public void editUser(User user) throws LoginException {
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "UPDATE users\n" + "SET username = 'new_username', email = 'new_email'\n" + "WHERE username = 'old_username';";
+            try (PreparedStatement stmt = conn.prepareStatement(SQL)) {
+                stmt.setString(1, (user.getUsername()));
+                stmt.setString(2, (user.getEmail()));
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (RuntimeException e) {
+            throw new LoginException();
+        }
+    }
+
 
     //View Wish2
     @Override

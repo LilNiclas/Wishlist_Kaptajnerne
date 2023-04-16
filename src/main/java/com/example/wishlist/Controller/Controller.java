@@ -7,10 +7,15 @@ import com.example.wishlist.Model.User;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Service.Service;
+import com.example.wishlist.Util.ConnectionManager;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.LoginException;
+import java.sql.Connection;
 import java.util.List;
 
 @org.springframework.stereotype.Controller
@@ -130,7 +135,6 @@ public class Controller {
 
 
 
-
     // Delete wish
     @GetMapping(value = {"/deleteWish/{wishID}"})
     public String showDeleteWish(@PathVariable  int wishID, Model model) {
@@ -144,4 +148,6 @@ public class Controller {
         service.deleteWish(wishID);
         return "redirect:/wishu/wishes/" + wishlistID;
     }
+
+
 }
