@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link th:href="@{/styles.css}" rel="stylesheet">
+    <title>Edit User</title>
 </head>
+
 <body>
 
+<form method="post" th:action="@{wishu/home/editUser/{id}(id=${id})}">
+    <h1 class="loginh1">Edit user</h1>
+
+    <label for="username">Username:</label>
+    <input id="username" type="text" th:name="username" th:value="${editUserUser.username}" required>
+
+    <label for="email">Email:</label>
+    <input id="email" type="text" th:name="email" th:value="${editUserUser.email}" required>
+
+    <input type="hidden" th:field="*{editUserUser.userId}">
+
+    <button type="submit">Save</button>
+</form>
+
+
+<div class="copyright">
+    &copy; 2023 Wishlist MCM. All rights reserved.
+</div>
+
 </body>
+
 </html>

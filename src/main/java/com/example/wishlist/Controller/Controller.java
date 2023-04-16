@@ -6,6 +6,7 @@ import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.User;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
+import com.example.wishlist.Repository.RepositoryDB;
 import com.example.wishlist.Service.Service;
 import com.example.wishlist.Util.ConnectionManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,12 +28,17 @@ public class Controller {
     public Controller(Service service) {
         this.service = service;
     }
+    private int getUserId(HttpServletRequest request) {
+        int userId = (int) request.getSession().getAttribute("userId");
+        return userId;
+    }
 
     //View Users                               //localhost:8083/wishu
     @GetMapping(path = "")
     public String showUsers(Model model) {
         List<User> users = service.getUsers();
-        model.addAttribute("user", users);
+        model.addAttribute("showUser", users);
+        model.addAttribute("userID", users);
         return "users";
     }
 
@@ -133,7 +139,21 @@ public class Controller {
         return "redirect:/wishu/wishes/" + wishListId;
     }
 
+    @GetMapping(value = {"/editUser/{id}"})
+    public String showEditUser(HttpServletRequest request, @PathVariable("id") int id, Model model) {
+        int userId = getUserId(request);
+        model.addAttribute("userId", userId);
+        model.addAttribute("id", id);
+        model.addAttribute("editUserUser", service.getUserFromId(id));
+        return "editUser";
+    }
 
+    @PostMapping(value = {"/editUser/{id}"})
+    public String editUser(HttpServletRequest request, @ModelAttribute User user, @PathVariable int id) throws LoginException {
+        int userId = getUserId(request);
+        service.editUser(user);
+            return "redirect:/wishu/" + userId;
+        }
 
     // Delete wish
     @GetMapping(value = {"/deleteWish/{wishID}"})

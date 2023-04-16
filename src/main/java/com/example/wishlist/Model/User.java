@@ -3,16 +3,17 @@ package com.example.wishlist.Model;
 public class User {
     private String email;
     private String username;
+    private int usersId;
 
-    public User(String email, String username) {
+    public User(String email, String username, int userId) {
         this.email = email;
         this.username = username;
+        this.usersId = userId;
     }
 
-    public User() {
-
+    public int getUserId() {
+        return usersId;
     }
-
     public String getEmail() {
         return email;
     }

@@ -73,7 +73,11 @@ public class Service {
     }
 
     public void editUser(User user) throws LoginException {
-        repositoryDB.editUser(user );
+        repositoryDB.editUser(user);
+    }
+
+    public User getUserFromId(int id){
+        return repositoryDB.getUserFromId(id);
     }
 
     public User getEmail() {

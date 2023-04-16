@@ -85,14 +85,15 @@ public class RepositoryDB implements IRepository {
         List<User> users = new ArrayList<>();
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT username, email FROM users;";
+            String SQL = "SELECT username, USERS_ID, email FROM users;";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SQL);
 
             while (rs.next()) {
+                int usersID = rs.getInt("USERS_ID");
                 String username = rs.getString("username");
                 String email = rs.getString("email");
-                users.add(new User(username, email));
+                users.add(new User(username, email, usersID));
             }
             return users;
         } catch (SQLException e) {
@@ -292,6 +293,29 @@ public class RepositoryDB implements IRepository {
             }
         } catch (RuntimeException e) {
             throw new LoginException();
+        }
+    }
+    @Override
+    public User getUserFromId(int id) {
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "SELECT * FROM USERS WHERE USERS_ID = ?;";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            User user1 = null;
+            if (rs.next()) {
+                int userID = rs.getInt("USER_ID");
+                String username = rs.getString("USERNAME");
+                String email = rs.getString("EMAIL");
+                user1 = new User(username, email, userID );
+
+            }
+
+            return user1;
+
+        } catch (SQLException ex) {
+            return null;
         }
     }
 

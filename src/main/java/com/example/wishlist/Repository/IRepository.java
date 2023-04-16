@@ -51,6 +51,8 @@ public interface IRepository {
     //Find wish by ID
     Wish findWishByID(int wishID);
 
+    User getUserFromId(int id);
+
     //View Wishes2
     public Wish getWishes2(int id);
 
