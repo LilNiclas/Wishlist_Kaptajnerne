@@ -261,11 +261,37 @@ public class RepositoryDB implements IRepository {
         }
     }
 
+    //Find wish by ID
+    @Override
+    public Wish findWishByID(int wishID) {
+        String SQL = "SELECT * FROM wishes WHERE wish_id = ?;";
+
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, wishID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int wishId = rs.getInt("wish_Id");
+                String itemName = rs.getString("itemName");
+                double price = rs.getDouble("price");
+                String description = rs.getString("description");
+                String link = rs.getString("link");
+                return new Wish(wishId, itemName, price, description, link);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     //Edit Wish
     @Override
     public void editWish(Wish wish) {
     }
 
+    //Edit WIsh
     @Override
     public void editWish(Wish wish, int wishlistID) {
         try {
@@ -287,45 +313,66 @@ public class RepositoryDB implements IRepository {
         }
     }
 
-    public void editUser(User user) throws LoginException {
+    //Edit User
+    public void editUser(User user) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "UPDATE users\n" + "SET username = 'new_username', email = 'new_email'\n" + "WHERE username = 'old_username';";
+            String SQL = "UPDATE users SET username = ?, email = ? WHERE users_id = ?;";
             try (PreparedStatement stmt = conn.prepareStatement(SQL)) {
                 stmt.setString(1, (user.getUsername()));
                 stmt.setString(2, (user.getEmail()));
+                stmt.setInt(3, user.getUserId());
                 stmt.executeUpdate();
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } catch (RuntimeException e) {
-            throw new LoginException();
+            throw new RuntimeException();
         }
     }
+
+    //ge
     @Override
-    public User getUserFromId(int id) {
+    public User getUserFromId(int userid) {
+        User user1 = null;
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
             String SQL = "SELECT * FROM USERS WHERE USERS_ID = ?;";
             PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setInt(1, id);
+            ps.setInt(1, userid);
             ResultSet rs = ps.executeQuery();
-            User user1 = null;
+
             if (rs.next()) {
                 int userID = rs.getInt("USER_ID");
                 String username = rs.getString("USERNAME");
                 String email = rs.getString("EMAIL");
-                user1 = new User(username, email, userID );
-
+                user1 = new User(username, email, userID);
             }
-
             return user1;
-
         } catch (SQLException ex) {
-            return null;
+            throw new RuntimeException();
         }
     }
 
+
+
+    public int findWishlistId(int wishId) {
+        int wishlistId = 0;
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL = "SELECT wishlist_id FROM wishlist_wishes WHERE WISH_ID = ?";
+            PreparedStatement ps = conn.prepareStatement(SQL);
+            ps.setInt(1, wishId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                wishlistId = rs.getInt("WISHLIST_ID");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return wishlistId;
+    }
 
     //View Wish2
     @Override
@@ -396,49 +443,6 @@ public class RepositoryDB implements IRepository {
         } catch (SQLException ex) {
             throw new RuntimeException();
         }
-    }
-
-
-    //Find wish by ID
-    @Override
-    public Wish findWishByID(int wishID) {
-        Wish wish = null;
-        try {
-            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT * FROM wishes WHERE wish_id = ?;";
-            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, wishID);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                int wishId = rs.getInt("wish_Id");
-                String itemName = rs.getString("itemName");
-                double price = rs.getDouble("price");
-                String description = rs.getString("description");
-                String link = rs.getString("link");
-                wish = new Wish(wishId, itemName, price, description, link);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return wish;
-    }
-
-    //Find wishlist by ID
-    public int findWishlistId(int wishId) {
-        int wishlistId = 0;
-        try {
-            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "SELECT wishlist_id FROM wishlist_wishes WHERE WISH_ID = ?";
-            PreparedStatement ps = conn.prepareStatement(SQL);
-            ps.setInt(1, wishId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                wishlistId = rs.getInt("WISHLIST_ID");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return wishlistId;
     }
 
 }

@@ -8,16 +8,16 @@
 
 <body>
 
-<form method="post" th:action="@{wishu/home/editUser/{id}(id=${id})}">
+<form method="post" th:action="@{wishu/editUser/{id}(id=${userId})}">
     <h1 class="loginh1">Edit user</h1>
 
     <label for="username">Username:</label>
-    <input id="username" type="text" th:name="username" th:value="${editUserUser.username}" required>
+    <input id="username" type="text" th:name="username" th:value="${user.username}" required>
 
     <label for="email">Email:</label>
-    <input id="email" type="text" th:name="email" th:value="${editUserUser.email}" required>
+    <input id="email" type="text" th:name="email" th:value="${user.email}" required>
 
-    <input type="hidden" th:field="*{editUserUser.userId}">
+    <input type="hidden" th:field="*{user.userId}">
 
     <button type="submit">Save</button>
 </form>

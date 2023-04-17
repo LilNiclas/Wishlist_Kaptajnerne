@@ -6,17 +6,11 @@ import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Model.User;
 import com.example.wishlist.Model.Wish;
 import com.example.wishlist.Model.Wishlist;
-import com.example.wishlist.Repository.RepositoryDB;
 import com.example.wishlist.Service.Service;
-import com.example.wishlist.Util.ConnectionManager;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.login.LoginException;
-import java.sql.Connection;
 import java.util.List;
 
 @org.springframework.stereotype.Controller
@@ -28,6 +22,7 @@ public class Controller {
     public Controller(Service service) {
         this.service = service;
     }
+
     private int getUserId(HttpServletRequest request) {
         int userId = (int) request.getSession().getAttribute("userId");
         return userId;
@@ -55,7 +50,7 @@ public class Controller {
     public String showWishses(@PathVariable int wishlistID, Model model) {
         List<Wish> wishes = service.getWishes(wishlistID);
         String username = service.findUsernameByWishlistID(wishlistID);
-        model.addAttribute("username",username);
+        model.addAttribute("username", username);
         model.addAttribute("wishes", wishes);
         return "wishes";
     }
@@ -125,7 +120,7 @@ public class Controller {
 
     //Edit Wish                                 //localhost:8083/wishu/editWish
     @GetMapping(value = {"home/editWish/{id}"})
-    public String showEditWish(HttpServletRequest request, @PathVariable("id") int id, Model model) {
+    public String showEditWish(@PathVariable("id") int id, Model model) {
         model.addAttribute("id", id);
         Wish wish = service.getWishes2(id);
         model.addAttribute("wish", wish);
@@ -133,37 +128,36 @@ public class Controller {
     }
 
     @PostMapping(value = {"home/editWish/{id}"})
-    public String editWish(@ModelAttribute Wish wish,@PathVariable int id) {
+    public String editWish(@ModelAttribute Wish wish, @PathVariable int id) {
         service.editWish(wish, id);
+
         int wishListId = service.findWishlistId(id);
         return "redirect:/wishu/wishes/" + wishListId;
     }
 
-    @GetMapping(value = {"/editUser/{id}"})
-    public String showEditUser(HttpServletRequest request, @PathVariable("id") int id, Model model) {
-        int userId = getUserId(request);
-        model.addAttribute("userId", userId);
-        model.addAttribute("id", id);
-        model.addAttribute("editUserUser", service.getUserFromId(id));
+    //Edit User
+    @GetMapping(value = {"/editUser/{userID}"})
+    public String showEditUser(@PathVariable("userID") int userID, Model model) {
+        model.addAttribute("userId", userID);
+        model.addAttribute("user", service.getUserFromId(userID));
         return "editUser";
     }
 
-    @PostMapping(value = {"/editUser/{id}"})
-    public String editUser(HttpServletRequest request, @ModelAttribute User user, @PathVariable int id) throws LoginException {
-        int userId = getUserId(request);
+    @PostMapping(value = {"/editUser/{userID}"})
+    public String editUser(@ModelAttribute User user, @PathVariable int userID) {
         service.editUser(user);
-            return "redirect:/wishu/" + userId;
-        }
+        return "redirect:/wishu";
+    }
 
     // Delete wish
     @GetMapping(value = {"/deleteWish/{wishID}"})
-    public String showDeleteWish(@PathVariable  int wishID, Model model) {
+    public String showDeleteWish(@PathVariable int wishID, Model model) {
         model.addAttribute("wishID", service.findWishByID(wishID));
         return "deleteWish";
     }
 
     @PostMapping("/deleteWish/{wishID}")
-    public String deleteWish(@ModelAttribute ("wishlistID") int wishID) {
+    public String deleteWish(@ModelAttribute("wishlistID") int wishID) {
         int wishlistID = service.findWishlistId(wishID);
         service.deleteWish(wishID);
         return "redirect:/wishu/wishes/" + wishlistID;

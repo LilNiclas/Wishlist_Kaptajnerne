@@ -15,10 +15,8 @@
         <p class="card-text" th:text ="${users.username}"></p>
         <a th:href="@{/wishu/home/{username}(username=${users.email})}"
            class="card-link">Wishlists</a>
-        <form class="frontform" th:action="@{/wishu/home/editUser/{id}(id=${users.userId})}" method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <input type="hidden" th:name="userId" th:value="${userId}"/>
-        </form>
+        <a th:href="@{/wishu/editUser/{id}(id=${users.userId})}"
+           class="card-link">Edit user</a>
     </div>
 </div>
 

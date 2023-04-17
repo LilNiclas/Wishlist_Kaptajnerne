@@ -72,7 +72,8 @@ public class Service {
     public void editWish(Wish wish) {
     }
 
-    public void editUser(User user) throws LoginException {
+    //Edit user
+    public void editUser(User user)  {
         repositoryDB.editUser(user);
     }
 
