@@ -5,11 +5,18 @@ public class Wishlist {
     private int wishlistID;
     private String listName;
     private String username;
+    private int users_id;
 
     public Wishlist(int wishlistID, String listName, String username) {
         this.wishlistID = wishlistID;
         this.listName = listName;
         this.username = username;
+    }
+    public Wishlist(int wishlistID, String listName, String username, int users_id) {
+        this.wishlistID = wishlistID;
+        this.listName = listName;
+        this.username = username;
+        this.users_id = users_id;
     }
 
     public int getWishlistID() {
@@ -34,5 +41,13 @@ public class Wishlist {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getUsers_id() {
+        return users_id;
+    }
+
+    public void setUsers_id(int users_id) {
+        this.users_id = users_id;
     }
 }

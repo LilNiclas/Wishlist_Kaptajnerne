@@ -5,11 +5,18 @@ public class WishlistDTO {
     private int wishlistID;
     private String listName;
     private String username;
+    private int users_id;
 
     public WishlistDTO(int wishlistID, String listName, String username) {
         this.wishlistID = wishlistID;
         this.listName = listName;
         this.username = username;
+    }
+    public WishlistDTO(int wishlistID, String listName, String username, int users_id) {
+        this.wishlistID = wishlistID;
+        this.listName = listName;
+        this.username = username;
+        this.users_id = users_id;
     }
 
     public WishlistDTO() {
@@ -37,5 +44,13 @@ public class WishlistDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getUsers_id() {
+        return users_id;
+    }
+
+    public void setUsers_id(int users_id) {
+        this.users_id = users_id;
     }
 }

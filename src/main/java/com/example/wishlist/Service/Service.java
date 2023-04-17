@@ -77,21 +77,32 @@ public class Service {
         repositoryDB.editUser(user);
     }
 
+    //Get User
     public User getUserFromId(int id){
         return repositoryDB.getUserFromId(id);
     }
 
+    //Get Email
     public User getEmail() {
         return getEmail();
     }
 
+    //DeleteWish
     public void deleteWish(int id) {
         repositoryDB.deleteWish(id);
     }
+
+    //Delete User
+    public void deleteUser(int userID) {
+        repositoryDB.deleteUser(userID);
+    }
+
+    //Find wish by id
     public Wish findWishByID(int id){
         return repositoryDB.findWishByID(id);
     }
 
+    //Find wishlistID
     public int findWishlistId(int wishID) {
         return repositoryDB.findWishlistId(wishID);
     }

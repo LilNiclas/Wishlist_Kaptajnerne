@@ -104,13 +104,13 @@ public class Controller {
 
 
     //Delete Wishlist                           //localhost:8083/wishu/home/{email}/delete/{wishlistID}
-    @GetMapping("home/delete/{wishlistID}")
+    @GetMapping(path ="home/delete/{wishlistID}")
     public String showDeleteWishlist(@PathVariable("wishlistID") int wishlistID, Model model) {
         model.addAttribute("wishlist", service.findWishlistByID(wishlistID));
         return "deleteWishlist";
     }
 
-    @PostMapping("home/delete/{wishlistID}")
+    @PostMapping(path ="home/delete/{wishlistID}")
     public String deleteWishlist(@ModelAttribute("wishlistID") int wishlistID) {
         String username = service.findUsernameByWishlistID(wishlistID);
         service.deleteWishlist(wishlistID);
@@ -119,7 +119,7 @@ public class Controller {
 
 
     //Edit Wish                                 //localhost:8083/wishu/editWish
-    @GetMapping(value = {"home/editWish/{id}"})
+    @GetMapping(path = "home/editWish/{id}")
     public String showEditWish(@PathVariable("id") int id, Model model) {
         model.addAttribute("id", id);
         Wish wish = service.getWishes2(id);
@@ -127,7 +127,7 @@ public class Controller {
         return "editWish";
     }
 
-    @PostMapping(value = {"home/editWish/{id}"})
+    @PostMapping(path = "home/editWish/{id}")
     public String editWish(@ModelAttribute Wish wish, @PathVariable int id) {
         service.editWish(wish, id);
 
@@ -136,32 +136,44 @@ public class Controller {
     }
 
     //Edit User
-    @GetMapping(value = {"/editUser/{userID}"})
+    @GetMapping(path = "/editUser/{userID}")
     public String showEditUser(@PathVariable("userID") int userID, Model model) {
         model.addAttribute("userId", userID);
         model.addAttribute("user", service.getUserFromId(userID));
         return "editUser";
     }
 
-    @PostMapping(value = {"/editUser/{userID}"})
+    @PostMapping(path = "/editUser/{userID}")
     public String editUser(@ModelAttribute User user, @PathVariable int userID) {
         service.editUser(user);
         return "redirect:/wishu";
     }
 
     // Delete wish
-    @GetMapping(value = {"/deleteWish/{wishID}"})
+    @GetMapping(path = "/deleteWish/{wishID}")
     public String showDeleteWish(@PathVariable int wishID, Model model) {
         model.addAttribute("wishID", service.findWishByID(wishID));
         return "deleteWish";
     }
 
-    @PostMapping("/deleteWish/{wishID}")
+    @PostMapping(path ="/deleteWish/{wishID}")
     public String deleteWish(@ModelAttribute("wishlistID") int wishID) {
         int wishlistID = service.findWishlistId(wishID);
         service.deleteWish(wishID);
         return "redirect:/wishu/wishes/" + wishlistID;
     }
 
+    //Delete User
+    @GetMapping (path="/deleteUser/{userID}")
+    public String showDeleteUser(@PathVariable int userID, Model model) {
+        model.addAttribute("userID", userID);
+        return "deleteUser";
+    }
+
+    @PostMapping (path="/deleteUser/{userID}")
+    public String deleteUser(@PathVariable int userID) {
+        service.deleteUser(userID);
+        return "redirect:/wishu";
+    }
 
 }

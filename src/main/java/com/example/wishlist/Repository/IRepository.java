@@ -13,7 +13,7 @@ public interface IRepository {
 
 
     //View Wishlists
-    public List<Wishlist> getWishlists(String email);
+    public List<Wishlist> getWishlists(String username);
 
     //View Wishes
     public List<Wish> getWishes(int wishlistID);
@@ -38,6 +38,8 @@ public interface IRepository {
     //Delete Wish
     public void deleteWish (int id);
 
+    //Delete User
+    public void deleteUser(int userID);
 
     //Edit Wish
     public void editWish(Wish wish, int wishlistID);

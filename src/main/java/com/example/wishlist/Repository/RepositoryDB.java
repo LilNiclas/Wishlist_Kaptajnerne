@@ -197,17 +197,17 @@ public class RepositoryDB implements IRepository {
 
     @Override
     public void deleteWishlist(Integer wishlistID) {
-        String deleteWishlistWishesSQL = "DELETE FROM wishlist_wishes WHERE wishlist_id = ?";
-        String deleteWishlistSQL = "DELETE FROM wishlist WHERE wishlist_id = ?";
+        String SQL1 = "DELETE FROM wishlist_wishes WHERE wishlist_id = ?";
+        String SQL2 = "DELETE FROM wishlist WHERE wishlist_id = ?";
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            conn.setAutoCommit(false); // set auto-commit to false to allow for a transaction
-            PreparedStatement deleteWishlistWishesStmt = conn.prepareStatement(deleteWishlistWishesSQL);
-            deleteWishlistWishesStmt.setInt(1, wishlistID);
-            int wishlistWishesDeleted = deleteWishlistWishesStmt.executeUpdate();
-            PreparedStatement deleteWishlistStmt = conn.prepareStatement(deleteWishlistSQL, Statement.RETURN_GENERATED_KEYS);
-            deleteWishlistStmt.setInt(1, wishlistID);
-            int wishlistDeleted = deleteWishlistStmt.executeUpdate();
+            conn.setAutoCommit(false);
+            PreparedStatement pstmt1 = conn.prepareStatement(SQL1);
+            pstmt1.setInt(1, wishlistID);
+            int wishlistWishesDeleted = pstmt1.executeUpdate();
+            PreparedStatement pstmt2 = conn.prepareStatement(SQL2, Statement.RETURN_GENERATED_KEYS);
+            pstmt2.setInt(1, wishlistID);
+            int wishlistDeleted = pstmt2.executeUpdate();
             if (wishlistDeleted > 0) {
                 conn.commit(); // commit the transaction if both statements succeed
                 System.out.println("Wishlist with ID " + wishlistID + " has been deleted, along with its " + wishlistWishesDeleted + " wishes.");
@@ -219,6 +219,47 @@ public class RepositoryDB implements IRepository {
             throw new RuntimeException(e);
         }
     }
+
+    //Delete User
+    public void deleteUser(int userID) {
+
+        try {
+            Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
+            String SQL1 = "DELETE FROM users WHERE users_id = ?";
+            String SQL2 = "DELETE FROM wishlist WHERE wishlist_id = ?";
+            String SQL3 = "DELETE FROM wishlist_wishes WHERE wishlist_id = ?";
+            String SQL4 = "DELETE FROM wishes WHERE wishlist_id = ?";
+            conn.setAutoCommit(false);
+
+            PreparedStatement pstmt4 = conn.prepareStatement(SQL4);
+            pstmt4.setInt(1, userID);
+            pstmt4.executeUpdate();
+
+            PreparedStatement pstmt3 = conn.prepareStatement(SQL3);
+            pstmt3.setInt(1, userID);
+            pstmt3.executeUpdate();
+
+            PreparedStatement pstmt2 = conn.prepareStatement(SQL2);
+            pstmt2.setInt(1, userID);
+            pstmt2.executeUpdate();
+
+            PreparedStatement pstmt1 = conn.prepareStatement(SQL1);
+            pstmt1.setInt(1, userID);
+            int userDeleted = pstmt1.executeUpdate();
+
+            if (userDeleted > 0) {
+                conn.commit();
+                System.out.println("User with ID " + userID + " has been deleted");
+            } else {
+                conn.rollback();
+                System.out.println("No user with ID " + userID + " found to delete.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
 
 
     //Find wishlist by ID
