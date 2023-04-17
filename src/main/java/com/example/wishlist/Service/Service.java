@@ -87,6 +87,10 @@ public class Service {
         return getEmail();
     }
 
+    public User getUsername (){
+        return getUsername();
+    }
+
     //DeleteWish
     public void deleteWish(int id) {
         repositoryDB.deleteWish(id);

@@ -9,7 +9,6 @@ import com.example.wishlist.Model.Wishlist;
 import com.example.wishlist.Util.ConnectionManager;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.security.auth.login.LoginException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -221,14 +220,14 @@ public class RepositoryDB implements IRepository {
     }
 
     //Delete User
+    @Override
     public void deleteUser(int userID) {
-
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
             String SQL1 = "DELETE FROM users WHERE users_id = ?";
-            String SQL2 = "DELETE FROM wishlist WHERE wishlist_id = ?";
-            String SQL3 = "DELETE FROM wishlist_wishes WHERE wishlist_id = ?";
-            String SQL4 = "DELETE FROM wishes WHERE wishlist_id = ?";
+            String SQL2 = "DELETE FROM wishlist WHERE username = ?";
+            String SQL3 = "DELETE FROM wishlist_wishes WHERE wishlist_id IN (SELECT wishlist_id FROM wishlist WHERE username = ?)";
+            String SQL4 = "DELETE FROM wishes WHERE wish_id IN (SELECT wish_id FROM wishlist_wishes WHERE wishlist_id IN (SELECT wishlist_id FROM wishlist WHERE username = ?))";
             conn.setAutoCommit(false);
 
             PreparedStatement pstmt4 = conn.prepareStatement(SQL4);
@@ -249,17 +248,15 @@ public class RepositoryDB implements IRepository {
 
             if (userDeleted > 0) {
                 conn.commit();
-                System.out.println("User with ID " + userID + " has been deleted");
+                System.out.println("User with ID " + userID + " and all their wishlists have been deleted.");
             } else {
                 conn.rollback();
                 System.out.println("No user with ID " + userID + " found to delete.");
             }
-
         } catch (SQLException e) {
-            throw new RuntimeException();
+            System.err.println("Error deleting user: " + e.getMessage());
         }
     }
-
 
 
     //Find wishlist by ID
