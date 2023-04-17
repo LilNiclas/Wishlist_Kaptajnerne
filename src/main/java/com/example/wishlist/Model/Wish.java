@@ -7,6 +7,7 @@ public class Wish {
     private double price;
     private String description;
     private String link;
+    private int wishlistID;
 
     public Wish(int wishID, String wishName, double price, String description, String link) {
         this.wishID = wishID;
@@ -14,6 +15,18 @@ public class Wish {
         this.price = price;
         this.description = description;
         this.link = link;
+    }
+    public Wish(int wishID, String wishName, double price, String description, String link, int wishlistID) {
+        this.wishID = wishID;
+        this.wishName = wishName;
+        this.price = price;
+        this.description = description;
+        this.link = link;
+        this.wishlistID = wishlistID;
+    }
+
+    public Wish() {
+
     }
 
     public int getWishID() {
@@ -54,5 +67,13 @@ public class Wish {
 
     public void setWishName(String wishName) {
         this.wishName = wishName;
+    }
+
+    public int getWishlistID() {
+        return wishlistID;
+    }
+
+    public void setWishlistID(int wishlistID) {
+        this.wishlistID = wishlistID;
     }
 }

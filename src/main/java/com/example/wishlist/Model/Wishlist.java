@@ -7,10 +7,10 @@ public class Wishlist {
     private String username;
     private int users_id;
 
-    public Wishlist(int wishlistID, String listName, String username) {
+    public Wishlist(int wishlistID, String listName, int users_id) {
         this.wishlistID = wishlistID;
         this.listName = listName;
-        this.username = username;
+        this.users_id = users_id;
     }
     public Wishlist(int wishlistID, String listName, String username, int users_id) {
         this.wishlistID = wishlistID;

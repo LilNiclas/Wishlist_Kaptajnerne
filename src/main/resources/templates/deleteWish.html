@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<link th:href="@{/createWishWT.css}" rel="stylesheet">
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Delete wish</title>
+</head>
+<body>
+
+<div class="container mt-5">
+  <h1>Delete wishlist</h1>
+  <form th:action="@{/wishu/deleteUser/{userID}(userID=${userID})}" method="post">
+    <input type="hidden" name="userID" value="${userID}"/>
+    <button type="submit">Delete User</button>
+  </form>
+</div>
+
+</body>
+</html>

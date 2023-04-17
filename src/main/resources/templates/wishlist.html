@@ -12,10 +12,11 @@
 <div class="card" th:each="list : ${wishlists}">
     <div class="card-body">
         <h5 class="card-title" th:text="${list.listName}"></h5>
-        <p class="card-text">info.</p>
+        <p class="card-text">WishU Enterprises.</p>
+
         <a th:href="@{/wishu/wishes/{wishlistID}(wishlistID=${list.wishlistID})}"
            class="card-link">Wishes</a>
-        <a th:href="@{/wishu/home/delete/{wishlistID}(wishlistID=${list.wishlistID})}"
+        <a th:href="@{/wishu/deleteWishlist/{wishlistID}(wishlistID=${list.wishlistID})}"
            class="card-link">Delete wishlist</a>
     </div>
 
@@ -24,7 +25,7 @@
 
 </table>
 <div class="createWishlist">
-    <a th:href="@{/wishu/home/{username}/addwishlist(username=${username})}">
+    <a th:href="@{/wishu/{userID}/addwishlist(userID=${userID})}">
         <button>Create new wishlist</button>
     </a>
     <a th:href="@{/wishu}">

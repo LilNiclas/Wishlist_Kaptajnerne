@@ -13,7 +13,7 @@ public interface IRepository {
 
 
     //View Wishlists
-    public List<Wishlist> getWishlists(String username);
+    public List<Wishlist> getWishlists(int userID);
 
     //View Wishes
     public List<Wish> getWishes(int wishlistID);
@@ -23,7 +23,7 @@ public interface IRepository {
 
 
     //Add Wishlist
-    public void addWishlist(WishlistDTO wishlist, String username);
+    public void addWishlist(WishlistDTO wishlist, int userID);
 
     //Add Wish
     public void addWish(WishDTO wish, int wishlistID);
@@ -56,7 +56,7 @@ public interface IRepository {
     User getUserFromId(int id);
 
     //View Wishes2
-    public Wish getWishes2(int id);
+    public Wish getWish2(int id);
 
 
 }

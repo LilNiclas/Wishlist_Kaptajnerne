@@ -38,19 +38,21 @@ public class Controller {
     }
 
     //View Wishlists                            //localhost:8083/wishu/home/{username}
-    @GetMapping(path = "home/{username}")
-    public String showWishlists(@PathVariable String username, Model model) {
-        List<Wishlist> wishlists = service.getWishlists(username);
+    @GetMapping(path = "/{userID}")
+    public String showWishlists(@PathVariable int userID, Model model) {
+        List<Wishlist> wishlists = service.getWishlists(userID);
         model.addAttribute("wishlists", wishlists);
         return "wishlist";
     }
+
 
     //View Wishes                               //localhost:8083/wishu/wishes/{wishlistID}
     @GetMapping(path = "wishes/{wishlistID}")
     public String showWishses(@PathVariable int wishlistID, Model model) {
         List<Wish> wishes = service.getWishes(wishlistID);
-        String username = service.findUsernameByWishlistID(wishlistID);
-        model.addAttribute("username", username);
+
+        int userID = service.findUserIDByWishlistID(wishlistID);
+        model.addAttribute("userID", userID);
         model.addAttribute("wishes", wishes);
         return "wishes";
     }
@@ -72,23 +74,23 @@ public class Controller {
 
 
     //Add Wishlist                              //localhost:8083/wishu/home/addwishlist
-    @GetMapping(path = "home/{username}/addwishlist")
-    public String showCreateWishlist(Model model, @PathVariable("username") String username) {
+    @GetMapping(path = "/{userID}/addwishlist")
+    public String showCreateWishlist(Model model, @PathVariable("userID") int userID) {
         WishlistDTO wishlist = new WishlistDTO();
         model.addAttribute("wishlist", wishlist);
-        model.addAttribute("username", username);
+        model.addAttribute("username", userID);
         return "createWishlist";
     }
 
-    @PostMapping(path = "home/{username}/addwishlist")
-    public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlist, @PathVariable("username") String username) {
-        service.addWishlist(wishlist, username);
-        return "redirect:/wishu/home/" + username;
+    @PostMapping(path = "/{userID}/addwishlist")
+    public String addWishlist(@ModelAttribute("wishlist") WishlistDTO wishlist, @PathVariable("userID") int userID) {
+        service.addWishlist(wishlist, userID);
+        return "redirect:/wishu/" + userID;
     }
 
 
-    //Add Wish                                  //localhost:8083/wishu/home/{wis}hlistID}/addwish
-    @GetMapping(path = "home/wishlists/{wishlistID}/addwish")
+    //Add Wish                                  //localhost:8083/wishu/{wishlistID}/addwish
+    @GetMapping(path = "/wishlists/{wishlistID}/addwish")
     public String showCreateWish(Model model, @PathVariable("wishlistID") int wishlistID) {
         WishDTO wish = new WishDTO();
         model.addAttribute("wish", wish);
@@ -96,57 +98,42 @@ public class Controller {
         return "createWish";
     }
 
-    @PostMapping(path = "home/wishlists/{wishlistID}/addwish")
+    @PostMapping(path = "/wishlists/{wishlistID}/addwish")
     public String addWish(@ModelAttribute("wish") WishDTO wishDTO, @PathVariable("wishlistID") int wishlistID) {
         service.addWish(wishDTO, wishlistID);
         return "redirect:/wishu/wishes/" + wishlistID;
     }
 
-
     //Delete Wishlist                           //localhost:8083/wishu/home/{email}/delete/{wishlistID}
-    @GetMapping(path ="home/delete/{wishlistID}")
+    @GetMapping(path ="/deleteWishlist/{wishlistID}")
     public String showDeleteWishlist(@PathVariable("wishlistID") int wishlistID, Model model) {
         model.addAttribute("wishlist", service.findWishlistByID(wishlistID));
         return "deleteWishlist";
     }
 
-    @PostMapping(path ="home/delete/{wishlistID}")
+    @PostMapping(path ="/deleteWishlist/{wishlistID}")
     public String deleteWishlist(@ModelAttribute("wishlistID") int wishlistID) {
-        String username = service.findUsernameByWishlistID(wishlistID);
+        int userID = service.findUserIDByWishlistID(wishlistID);
         service.deleteWishlist(wishlistID);
-        return "redirect:/wishu/home/" + username;
+        return "redirect:/wishu/" + userID;
     }
 
 
     //Edit Wish                                 //localhost:8083/wishu/editWish
-    @GetMapping(path = "home/editWish/{id}")
-    public String showEditWish(@PathVariable("id") int id, Model model) {
-        model.addAttribute("id", id);
-        Wish wish = service.getWishes2(id);
+    @GetMapping(path = "/editWish/{wishID}")
+    public String showEditWish(@PathVariable("wishID") int wishID, Model model) {
+        model.addAttribute("wishID", wishID);
+        Wish wish = service.getWish2(wishID);
         model.addAttribute("wish", wish);
         return "editWish";
     }
 
-    @PostMapping(path = "home/editWish/{id}")
-    public String editWish(@ModelAttribute Wish wish, @PathVariable int id) {
-        service.editWish(wish, id);
+    @PostMapping(path = "/editWish/{wishID}")
+    public String editWish(@ModelAttribute Wish wish, @PathVariable int wishID) {
+        service.editWish(wish, wishID);
 
-        int wishListId = service.findWishlistId(id);
-        return "redirect:/wishu/wishes/" + wishListId;
-    }
-
-    //Edit User
-    @GetMapping(path = "/editUser/{userID}")
-    public String showEditUser(@PathVariable("userID") int userID, Model model) {
-        model.addAttribute("userId", userID);
-        model.addAttribute("user", service.getUserFromId(userID));
-        return "editUser";
-    }
-
-    @PostMapping(path = "/editUser/{userID}")
-    public String editUser(@ModelAttribute User user, @PathVariable int userID) {
-        service.editUser(user);
-        return "redirect:/wishu";
+        int wishlistId = service.findWishlistId(wishID);
+        return "redirect:/wishu/wishes/" + wishlistId;
     }
 
     // Delete wish
@@ -158,10 +145,37 @@ public class Controller {
 
     @PostMapping(path ="/deleteWish/{wishID}")
     public String deleteWish(@ModelAttribute("wishID") int wishID) {
-        int wishlistID = service.findWishByID(wishID).getWishID();
+        int wishlistID = service.findWishlistId(wishID);
         service.deleteWish(wishID);
         return "redirect:/wishu/wishes/" + wishlistID;
     }
+
+    //Edit User
+    @GetMapping(path = "/editUser/{userID}")
+    public String showEditUser(@PathVariable("userID") int userID, Model model) {
+        model.addAttribute("userID", userID);
+        model.addAttribute("user", service.getUserFromId(userID));
+        return "editUser";
+    }
+
+    @PostMapping(path = "/editUser/{userID}")
+    public String editUser(@ModelAttribute User user, @PathVariable int userID) {
+        service.editUser(user);
+        return "redirect:/wishu";
+    }
+
+    //works
+    //_____________________________________________________________________________________________________
+    //deosnt work
+
+
+
+
+
+
+
+
+
 
     //Delete User
     @GetMapping (path="/deleteUser/{userID}")

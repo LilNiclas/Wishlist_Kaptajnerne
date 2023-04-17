@@ -23,9 +23,10 @@ public class Service {
     }
 
     //View Wishlists
-    public List<Wishlist> getWishlists(String username) {
-        return repositoryDB.getWishlists(username);
+    public List<Wishlist> getWishlists(int userID) {
+        return repositoryDB.getWishlists(userID);
     }
+
 
     //View Wishes
     public List<Wish> getWishes(int wishlistID) {
@@ -37,20 +38,48 @@ public class Service {
         return repositoryDB.getUsers();
     }
 
+    //Add User
+    public void addUser(UserDTO user) {
+        repositoryDB.addUser(user);
+    }
+
+    //find userID by listID
+    public int findUserIDByWishlistID(int wishlistID) {
+        return repositoryDB.findUserIDByWishlistID(wishlistID);
+    }
 
     //Add Wishlist
-    public void addWishlist(WishlistDTO wishlist, String username) {
-        repositoryDB.addWishlist(wishlist, username);
+    public void addWishlist(WishlistDTO wishlist, int userID) {
+        repositoryDB.addWishlist(wishlist, userID);
     }
+
 
     //Add Wish
     public void addWish(WishDTO wish, int wishlistID) {
         repositoryDB.addWish(wish, wishlistID);
     }
 
-    public void addUser(UserDTO user) {
-        repositoryDB.addUser(user);
+
+    //Delete Wishlist
+    public void deleteWishlist(Integer wishlistID) {
+        repositoryDB.deleteWishlist(wishlistID);
     }
+
+    //done
+    //_________________________________________________________________________
+    //not done
+
+
+    //Edit Wish
+    public void editWish(Wish wish, int wishID) {
+        repositoryDB.editWish(wish, wishID);
+    }
+
+    //Edit Wish
+    public void editWish(Wish wish) {
+    }
+
+
 
 
     //Find Wishlist
@@ -58,19 +87,6 @@ public class Service {
         return repositoryDB.findWishlistByID(wishlistID);
     }
 
-    //Delete Wishlist
-    public void deleteWishlist(Integer wishlistID) {
-        repositoryDB.deleteWishlist(wishlistID);
-    }
-
-    //Edit Wish
-    public void editWish(Wish wish, int wishlistID) {
-        repositoryDB.editWish(wish, wishlistID);
-    }
-
-    //Edit Wish
-    public void editWish(Wish wish) {
-    }
 
     //Edit user
     public void editUser(User user)  {
@@ -108,14 +124,11 @@ public class Service {
     }
 
     //View Wish2
-    public Wish getWishes2(int wishlistID) {
-        return repositoryDB.getWishes2(wishlistID);
+    public Wish getWish2(int wishlistID) {
+        return repositoryDB.getWish2(wishlistID);
     }
 
-    public String findUsernameByWishlistID(int wishlistID) {
-        return repositoryDB.findUsernameByWishlistID(wishlistID);
-    }
-
+    //
     public int getWishlistID(){
         return wishlist.getWishlistID();
     }

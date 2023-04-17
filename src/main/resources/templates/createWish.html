@@ -8,7 +8,7 @@
 <body>
 <div>
     <h1>Create wish</h1>
-    <form action="#" th:action="@{/wishu/home/wishlists/{wishlistID}/addwish(wishlistID=${wishlistID})}" method="post" th:object="${wish}">
+    <form action="#" th:action="@{/wishu/wishlists/{wishlistID}/addwish(wishlistID=${wishlistID})}" method="post" th:object="${wish}">
 
     <label>Name</label>
         <input type="text" th:field="*{wishName}" required/><br/>

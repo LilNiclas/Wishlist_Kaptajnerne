@@ -25,7 +25,7 @@
         <td th:text="${wish.description}"/>
         <td th:text="${wish.link}"/>
         <td>
-            <a th:href="@{'/wishu/home/editWish/'+${wish.wishID}}">
+            <a th:href="@{/wishu/editWish/{wishID}(wishID=${wish.wishID})}">
                 <button type="button" class="btn">Edit wish</button>
             </a>
             <form th:action="@{/wishu/deleteWish/{wishID}(wishID=${wish.wishID}, wishlistID=${wishlistID})}" method="POST">
@@ -35,10 +35,10 @@
     </tr>
     </tbody>
 </table>
-<a th:href="@{/wishu/home/wishlists/{wishlistID}/addwish(wishlistID=${wishlistID})}">
+<a th:href="@{/wishu/wishlists/{wishlistID}/addwish(wishlistID=${wishlistID})}">
     <button type="button" class="btn btn.secondary btn-lg btn-block">Add new wish</button>
 </a>
-<a th:href="@{/wishu/home/{username}(username=${username})}">
+<a th:href="@{/wishu/{userID}(userID=${userID})}">
     <button type="button" class="btn btn-secondary btn-lg btn-block">Return to wishlists</button>
 </a>
 
