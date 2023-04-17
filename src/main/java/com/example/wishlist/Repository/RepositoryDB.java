@@ -194,18 +194,25 @@ public class RepositoryDB implements IRepository {
         }
     }
 
-    //Delete Wishlist
+
     @Override
     public void deleteWishlist(Integer wishlistID) {
-        String SQL = "DELETE FROM wishlist WHERE wishlist_id = ?";
+        String deleteWishlistWishesSQL = "DELETE FROM wishlist_wishes WHERE wishlist_id = ?";
+        String deleteWishlistSQL = "DELETE FROM wishlist WHERE wishlist_id = ?";
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, wishlistID);
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Wishlist with ID " + wishlistID + " has been deleted.");
+            conn.setAutoCommit(false); // set auto-commit to false to allow for a transaction
+            PreparedStatement deleteWishlistWishesStmt = conn.prepareStatement(deleteWishlistWishesSQL);
+            deleteWishlistWishesStmt.setInt(1, wishlistID);
+            int wishlistWishesDeleted = deleteWishlistWishesStmt.executeUpdate();
+            PreparedStatement deleteWishlistStmt = conn.prepareStatement(deleteWishlistSQL, Statement.RETURN_GENERATED_KEYS);
+            deleteWishlistStmt.setInt(1, wishlistID);
+            int wishlistDeleted = deleteWishlistStmt.executeUpdate();
+            if (wishlistDeleted > 0) {
+                conn.commit(); // commit the transaction if both statements succeed
+                System.out.println("Wishlist with ID " + wishlistID + " has been deleted, along with its " + wishlistWishesDeleted + " wishes.");
             } else {
+                conn.rollback(); // rollback the transaction if the wishlist was not found to delete
                 System.out.println("No wishlist with ID " + wishlistID + " found to delete.");
             }
         } catch (SQLException e) {
