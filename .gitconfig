@@ -1,0 +1,3 @@
+#  git config --local --add include.path ../.gitconfig
+[push]
+  default = current
