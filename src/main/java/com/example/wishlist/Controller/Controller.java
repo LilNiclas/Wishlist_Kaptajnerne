@@ -157,8 +157,8 @@ public class Controller {
     }
 
     @PostMapping(path ="/deleteWish/{wishID}")
-    public String deleteWish(@ModelAttribute("wishlistID") int wishID) {
-        int wishlistID = service.findWishlistId(wishID);
+    public String deleteWish(@ModelAttribute("wishID") int wishID) {
+        int wishlistID = service.findWishByID(wishID).getWishID();
         service.deleteWish(wishID);
         return "redirect:/wishu/wishes/" + wishlistID;
     }

@@ -11,7 +11,7 @@
     <form action="#" th:action="@{/wishu/home/wishlists/{wishlistID}/addwish(wishlistID=${wishlistID})}" method="post" th:object="${wish}">
 
     <label>Name</label>
-        <input type="text" th:field="*{itemName}" required/><br/>
+        <input type="text" th:field="*{wishName}" required/><br/>
 
         <label>Price</label>
         <input type="number" th:field="*{price}"> <br/>

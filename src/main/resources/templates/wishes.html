@@ -20,16 +20,17 @@
     </thead>
     <tbody>
     <tr th:each="wish : ${wishes}">
-        <td th:text="${wish.itemName}"/>
+        <td th:text="${wish.wishName}"/>
         <td th:text="${wish.price}"/>
         <td th:text="${wish.description}"/>
         <td th:text="${wish.link}"/>
-        <td><a th:href="@{'/wishu/home/editWish/'+${wish.wishID}}">
-            <button type="button" class="btn">Edit wish</button>
-        </a>
-            <a th:href="@{/wishu/deleteWish/{wishID}(wishID=${wish.wishID})}">
-                <button type="button" class="btn">Delete wish</button>
+        <td>
+            <a th:href="@{'/wishu/home/editWish/'+${wish.wishID}}">
+                <button type="button" class="btn">Edit wish</button>
             </a>
+            <form th:action="@{/wishu/deleteWish/{wishID}(wishID=${wish.wishID}, wishlistID=${wishlistID})}" method="POST">
+            <button type="submit" class="btn">Delete wish</button>
+            </form>
         </td>
     </tr>
     </tbody>

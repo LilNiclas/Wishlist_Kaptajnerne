@@ -11,8 +11,8 @@
 <body>
 <div>
     <form method="post" th:action="@{/wishu/home/editWish/{id}(id=${id})}">
-        <label for="itemName">ItemName:</label>
-        <input id="itemName" type="text" th:name="itemName" th:value="${wish.itemName}" required>
+        <label for="itemName">WishName:</label>
+        <input id="itemName" type="text" th:name="wishName" th:value="${wish.wishName}" required>
         <label for="description">description:</label>
         <textarea id="description" th:name="description" th:text="${wish.description}"></textarea>
         <label for="price">price:</label>

@@ -66,12 +66,12 @@ public class RepositoryDB implements IRepository {
 
             while (rs.next()) {
                 int wishID = rs.getInt("wish_id");
-                String itemName = rs.getString("wishName");
+                String wishName = rs.getString("wishName");
                 double price = rs.getDouble("price");
                 String description = rs.getString("description");
                 String link = rs.getString("link");
 
-                wishes.add(new Wish(wishID, itemName, price, description, link));
+                wishes.add(new Wish(wishID, wishName, price, description, link));
             }
             return wishes;
         } catch (SQLException e) {
@@ -169,7 +169,7 @@ public class RepositoryDB implements IRepository {
                     "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, wishID);
-            pstmt.setString(2, wish.getItemName());
+            pstmt.setString(2, wish.getWishName());
             pstmt.setDouble(3, wish.getPrice());
             pstmt.setString(4, wish.getDescription());
             pstmt.setString(5, wish.getLink());
@@ -180,7 +180,7 @@ public class RepositoryDB implements IRepository {
             if (rs.next()) {
                 wishID = rs.getInt(1);
                 //Insert into wishlist_wishses
-                WishDTO list = new WishDTO(wish.getWishID(), wish.getItemName(), wish.getPrice(), wish.getDescription(), wish.getLink());
+                WishDTO list = new WishDTO(wish.getWishID(), wish.getWishName(), wish.getPrice(), wish.getDescription(), wish.getLink());
                 SQL = "INSERT INTO wishlist_wishes (wishlist_id, wish_id) " +
                         "VALUES (?, ?)";
                 pstmt = conn.prepareStatement(SQL);
@@ -290,10 +290,16 @@ public class RepositoryDB implements IRepository {
     public void deleteWish(int id) {
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            String SQL = "delete from wishes where wish_id = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(SQL)) {
-                stmt.setInt(1, id);
-                stmt.executeUpdate();
+            String SQL1 = "delete from wishlist_wishes where wish_id = ?";
+            String SQL2 = "delete from wishes where wish_id = ?";
+            try (PreparedStatement stmt1 = conn.prepareStatement(SQL1);
+                 PreparedStatement stmt2 = conn.prepareStatement(SQL2)) {
+                // delete records from wishlist_wishes table first
+                stmt1.setInt(1, id);
+                stmt1.executeUpdate();
+                // then delete the wish from wishes table
+                stmt2.setInt(1, id);
+                stmt2.executeUpdate();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -302,23 +308,24 @@ public class RepositoryDB implements IRepository {
         }
     }
 
+
     //Find wish by ID
     @Override
     public Wish findWishByID(int wishID) {
-        String SQL = "SELECT * FROM wishes WHERE wish_id = ?;";
 
         try {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
-            PreparedStatement pstmt = conn.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            String SQL = "SELECT * FROM wishes WHERE wish_id = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, wishID);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 int wishId = rs.getInt("wish_Id");
-                String itemName = rs.getString("itemName");
+                String wishName = rs.getString("wishName");
                 double price = rs.getDouble("price");
                 String description = rs.getString("description");
                 String link = rs.getString("link");
-                return new Wish(wishId, itemName, price, description, link);
+                return new Wish(wishId, wishName, price, description, link);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -339,7 +346,7 @@ public class RepositoryDB implements IRepository {
             Connection conn = ConnectionManager.getConnection(db_url, uid, pwd);
             String SQL = "UPDATE wishes SET wishName = ?, price = ?, description = ?, link = ? WHERE wish_id = ?";
             try (PreparedStatement stmt = conn.prepareStatement(SQL)) {
-                stmt.setString(1, wish.getItemName());
+                stmt.setString(1, wish.getWishName());
                 stmt.setDouble(2, wish.getPrice());
                 stmt.setString(3, wish.getDescription());
                 stmt.setString(4, wish.getLink());
