@@ -15,15 +15,16 @@ CREATE TABLE wishes
  primary key (wish_id));
 
 CREATE TABLE users
-(email varchar(75) not null,
- username varchar(50) not null,
- primary key(email),
+(users_id int auto_increment,
+ email varchar(75) not null,
+ username varchar(50),
+ primary key(users_id),
  index(username));
 
 CREATE TABLE wishlist
 (wishlist_id int not null auto_increment,
  wishlistName varchar(100) not null,
- username varchar(50) not null,
+ username varchar(50),
  primary key (wishlist_id),
  foreign key (username) references users (username));
 
